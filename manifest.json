@@ -1,0 +1,13 @@
+{
+  "domain": "synology_download_station",
+  "name": "Synology Download Station",
+  "documentation": "https://github.com/barto95100/synology-download-station",
+  "issue_tracker": "https://github.com/barto95100/synology-download-station/issues",
+  "requirements": [],
+  "dependencies": [],
+  "codeowners": ["@barto95100-"],
+  "version": "1.0.0",
+  "iot_class": "local_polling",
+  "integration_type": "device",
+  "config_flow": true
+}

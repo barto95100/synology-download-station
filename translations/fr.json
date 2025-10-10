@@ -1,0 +1,26 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Synology Download Station",
+        "description": "Configurez votre connexion à Synology Download Station",
+        "data": {
+          "host": "Hôte",
+          "port": "Port",
+          "ssl": "Utiliser SSL",
+          "verify_ssl": "Vérifier le certificat SSL",
+          "username": "Nom d'utilisateur",
+          "password": "Mot de passe"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Impossible de se connecter à Synology Download Station",
+      "invalid_auth": "Identifiants d'authentification invalides",
+      "unknown": "Erreur inattendue"
+    },
+    "abort": {
+      "already_configured": "Ce Synology Download Station est déjà configuré"
+    }
+  }
+}

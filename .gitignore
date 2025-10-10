@@ -1,0 +1,42 @@
+# Fichiers de développement local
+ha-dev-config/
+ha-dev-db/
+*.log
+
+# Scripts de développement
+dev-start.sh
+docker-dev.sh
+clean-all.sh
+Makefile
+docker-compose.dev.yml
+START_HERE.txt
+DEV_SETUP.md
+QUICKSTART_MACOS.md
+DOCKER_VS_PYTHON.md
+LISEZMOI.md
+
+# Environnement Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Tests
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Home Assistant
+.homeassistant/
+home-assistant_v2.db*
