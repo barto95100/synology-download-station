@@ -98,6 +98,8 @@ entities:
     name: Progress
 ```
 
+**📖 For more card examples (gauges, graphs, custom cards, etc.), check out the [LOVELACE_EXAMPLES.md](LOVELACE_EXAMPLES.md) file!**
+
 ### Automation - Download Complete Notification
 
 ```yaml

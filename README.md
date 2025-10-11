@@ -98,6 +98,8 @@ entities:
     name: Progression
 ```
 
+**📖 Pour plus d'exemples de cartes (jauges, graphiques, cartes personnalisées, etc.), consultez le fichier [LOVELACE_EXAMPLES.md](LOVELACE_EXAMPLES.md) !**
+
 ### Automation - Notification de téléchargement terminé
 
 ```yaml
