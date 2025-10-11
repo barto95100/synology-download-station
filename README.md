@@ -5,13 +5,13 @@
 [![License](https://img.shields.io/github/license/barto95100/synology-download-station)](LICENSE)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/barto95100/synology-download-station/graphs/commit-activity)
 
-> **Intégration Home Assistant pour surveiller Synology Download Station en temps réel.**
+Intégration Home Assistant pour surveiller et contrôler Synology Download Station en temps réel.
 
-Monitor and track your Synology Download Station downloads directly from Home Assistant with real-time sensors and detailed statistics.
+> 🇬🇧 [English version / Version anglaise](README_EN.md)
 
-**Version française ci-dessous** | *French version below*
+---
 
-## Fonctionnalités
+## ✨ Fonctionnalités
 
 - 📊 **Capteurs en temps réel** :
   - Nombre de téléchargements actifs
@@ -21,7 +21,7 @@ Monitor and track your Synology Download Station downloads directly from Home As
   - Données téléchargées
   - Progression globale des téléchargements
 
-- 🔄 **Mise à jour automatique** toutes les 30 secondes
+- 🔄 **Mise à jour automatique** toutes les 60 secondes
 - 🔐 **Authentification sécurisée** avec gestion des sessions
 - 🌐 **Support SSL/HTTPS**
 - 📝 **Détails des téléchargements** dans les attributs des capteurs
@@ -51,7 +51,7 @@ Cette intégration sera bientôt disponible via HACS.
 
 Lors de l'ajout de l'intégration, vous devrez fournir :
 
-- **Hôte** : Adresse IP ou nom d'hôte de votre NAS Synology (ex: `10.150.150.182`)
+- **Hôte** : Adresse IP ou nom d'hôte de votre NAS Synology (ex: `192.168.1.10`)
 - **Port** : Port de l'API (par défaut `5000` pour HTTP, `5001` pour HTTPS)
 - **SSL** : Cochez si vous utilisez HTTPS
 - **Vérifier SSL** : Décochez si vous utilisez un certificat auto-signé
@@ -61,11 +61,11 @@ Lors de l'ajout de l'intégration, vous devrez fournir :
 ### Exemple de configuration
 
 ```
-Hôte: 10.150.150.182
+Hôte: 192.168.1.10
 Port: 5000
 SSL: Non
 Vérifier SSL: Non
-Nom d'utilisateur: multimedia
+Nom d'utilisateur: votre_utilisateur
 Mot de passe: votre_mot_de_passe
 ```
 
@@ -149,4 +149,4 @@ MIT License
 
 ## Crédits
 
-Développé pour Home Assistant avec ❤️
+Développé pour Home Assistant avec ❤️ par HACF
