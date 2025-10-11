@@ -10,8 +10,6 @@ Ce document présente différents exemples de cartes pour afficher les données 
 
 Une carte simple affichant tous les capteurs principaux.
 
-*A simple card displaying all main sensors.*
-
 ```yaml
 type: entities
 title: Synology Download Station
@@ -39,7 +37,6 @@ entities:
 
 Affichage compact avec grandes icônes, parfait pour un tableau de bord.
 
-*Compact display with large icons, perfect for a dashboard.*
 
 ```yaml
 type: glance
@@ -64,7 +61,6 @@ show_state: true
 
 Affiche la progression des téléchargements sous forme de jauge circulaire.
 
-*Displays download progress as a circular gauge.*
 
 ```yaml
 type: gauge
@@ -85,7 +81,6 @@ needle: true
 
 Cartes modernes avec graphique intégré (nécessite `statistic` configuré sur les capteurs).
 
-*Modern cards with integrated graphs (requires `statistic` configured on sensors).*
 
 ```yaml
 type: statistic
@@ -103,7 +98,6 @@ name: Vitesse moyenne
 
 Affiche chaque téléchargement avec toutes ses informations (comme dans l'interface Synology).
 
-*Displays each download with all its information (like in the Synology interface).*
 
 ### Version 1 : Liste compacte avec barres de progression
 
@@ -968,8 +962,6 @@ cards:
 
 Une vue complète combinant plusieurs cartes pour un aperçu complet.
 
-*A complete view combining multiple cards for a full overview.*
-
 ```yaml
 type: vertical-stack
 cards:
@@ -1036,8 +1028,6 @@ cards:
 
 Affiche un graphique de la vitesse de téléchargement dans le temps.
 
-*Displays a graph of download speed over time.*
-
 **⚠️ Nécessite l'installation de [mini-graph-card](https://github.com/kalkih/mini-graph-card) via HACS**
 
 *⚠️ Requires [mini-graph-card](https://github.com/kalkih/mini-graph-card) installation via HACS*
@@ -1068,8 +1058,6 @@ show:
 ## 📊 ApexCharts (Carte personnalisée avancée)
 
 Graphique avancé avec plusieurs métriques.
-
-*Advanced chart with multiple metrics.*
 
 **⚠️ Nécessite l'installation de [apexcharts-card](https://github.com/RomRider/apexcharts-card) via HACS**
 
@@ -1120,8 +1108,6 @@ yaxis:
 
 Affiche une alerte uniquement si des téléchargements sont actifs.
 
-*Displays an alert only when downloads are active.*
-
 ```yaml
 type: conditional
 conditions:
@@ -1145,8 +1131,6 @@ card:
 ## 🔔 Carte de notification / Notification Card
 
 Affiche une bannière en haut de l'écran quand un téléchargement est terminé.
-
-*Displays a banner at the top of the screen when a download is complete.*
 
 ```yaml
 type: conditional
@@ -1176,8 +1160,6 @@ card:
 
 ### Actualisation des données / Data Refresh
 Les capteurs se mettent à jour toutes les **60 secondes** par défaut.
-
-*Sensors update every **60 seconds** by default.*
 
 ### Automatisations suggérées / Suggested Automations
 
@@ -1225,8 +1207,6 @@ action:
 
 Vous pouvez personnaliser l'apparence de n'importe quelle carte avec [card-mod](https://github.com/thomasloven/lovelace-card-mod).
 
-*You can customize the appearance of any card with [card-mod](https://github.com/thomasloven/lovelace-card-mod).*
-
 **Exemple:**
 ```yaml
 type: entities
@@ -1246,6 +1226,3 @@ card_mod:
 ---
 
 **💡 Astuce:** Combinez plusieurs cartes pour créer votre tableau de bord personnalisé !
-
-**💡 Tip:** Combine multiple cards to create your custom dashboard!
-
