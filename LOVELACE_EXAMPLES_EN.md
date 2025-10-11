@@ -10,6 +10,10 @@ This document presents various card examples to display your Synology Download S
 
 A simple card displaying all main sensors.
 
+<details >
+
+<summary> ℹ️ Code here</summary>
+
 ```yaml
 type: entities
 title: Synology Download Station
@@ -31,11 +35,14 @@ entities:
     icon: mdi:harddisk
 ```
 
----
-
+</details>
 ## 🎯 Compact View with Icons
 
 Compact display with large icons, perfect for a dashboard.
+
+<details >
+
+<summary> ℹ️ Code here</summary>
 
 ```yaml
 type: glance
@@ -54,11 +61,14 @@ show_icon: true
 show_state: true
 ```
 
----
-
+</details>
 ## 📈 Progress Gauge
 
 Displays download progress as a circular gauge.
+
+<details >
+
+<summary> ℹ️ Code here</summary>
 
 ```yaml
 type: gauge
@@ -73,11 +83,15 @@ severity:
 needle: true
 ```
 
----
+</details>
 
 ## 🚀 Statistics Card
 
 Modern cards with integrated graphs (requires `statistic` configured on sensors).
+
+<details >
+
+<summary> ℹ️ Code here</summary>
 
 ```yaml
 type: statistic
@@ -89,13 +103,17 @@ stat_type: mean
 name: Average Speed
 ```
 
----
+</details>
 
 ## 📋 Detailed Download List
 
 Displays each download with all its information (like in the Synology interface).
 
 ### Version 1: Compact list with progress bars
+
+<details >
+
+<summary> ℹ️ Code here</summary>
 
 ```yaml
 type: markdown
@@ -126,9 +144,13 @@ content: |
   {% endif %}
 ```
 
----
+</details>
 
 ### Version 2: Detailed table style
+
+<details >
+
+<summary> ℹ️ Code here</summary>
 
 ```yaml
 type: markdown
@@ -146,9 +168,13 @@ content: |
   {% endif %}
 ```
 
----
+</details>
 
 ### Version 3: Individual cards
+
+<details >
+
+<summary> ℹ️ Code here</summary>
 
 ```yaml
 type: markdown
@@ -174,9 +200,13 @@ content: |
   {% endif %}
 ```
 
----
+</details>
 
 ### Version 4: Complete dashboard with integrated graph
+
+<details >
+
+<summary> ℹ️ Code here</summary>
 
 ```yaml
 type: vertical-stack
@@ -238,9 +268,13 @@ cards:
       {% endif %}
 ```
 
----
+</details>
 
 ### Version 5: Modern style with icons and colors
+
+<details >
+
+<summary> ℹ️ Code here</summary>
 
 ```yaml
 type: markdown
@@ -281,11 +315,15 @@ content: |
   {% endif %}
 ```
 
----
+</details>
 
 ### Version 6: Button-Card interactive (full width)
 
 **⚠️ Requires [button-card](https://github.com/custom-cards/button-card) via HACS**
+
+<details >
+
+<summary> ℹ️ Code here</summary>
 
 ```yaml
 type: custom:button-card
@@ -440,11 +478,15 @@ custom_fields:
 card_size: auto
 ```
 
----
+</details>
 
 ### Version 7: Mushroom Cards (Modern style)
 
 **⚠️ Requires [mushroom](https://github.com/piitaya/lovelace-mushroom) via HACS**
+
+<details >
+
+<summary> ℹ️ Code here</summary>
 
 ```yaml
 type: vertical-stack
@@ -528,11 +570,15 @@ cards:
       {% endif %}
 ```
 
----
+</details>
 
 ### Version 8: Auto-Entities with dynamic cards
 
 **⚠️ Requires [auto-entities](https://github.com/thomasloven/lovelace-auto-entities) and [card-mod](https://github.com/thomasloven/lovelace-card-mod) via HACS**
+
+<details >
+
+<summary> ℹ️ Code here</summary>
 
 ```yaml
 type: vertical-stack
@@ -567,11 +613,15 @@ cards:
       title: All Sensors
 ```
 
----
+</details>
 
 ### Version 9: Media Player Style (Elegant)
 
 **⚠️ Requires [button-card](https://github.com/custom-cards/button-card) via HACS**
+
+<details >
+
+<summary> ℹ️ Code here</summary>
 
 ```yaml
 type: custom:button-card
@@ -692,11 +742,15 @@ custom_fields:
     ]]]
 ```
 
----
+</details>
 
 ### Version 10: Compact Grid Style
 
 **⚠️ Requires [button-card](https://github.com/custom-cards/button-card) via HACS**
+
+<details >
+
+<summary> ℹ️ Code here</summary>
 
 ```yaml
 type: custom:button-card
@@ -808,11 +862,15 @@ custom_fields:
     ]]]
 ```
 
----
+</details>
 
 ### Version 11: Swipe Card (Horizontal navigation)
 
 **⚠️ Requires [swipe-card](https://github.com/bramkragten/swipe-card) via HACS**
+
+<details >
+
+<summary> ℹ️ Code here</summary>
 
 ```yaml
 type: custom:swipe-card
@@ -896,11 +954,15 @@ cards:
       {% endif %}
 ```
 
----
+</details>
 
 ### Version 12: Bar Card (Horizontal bars)
 
 **⚠️ Requires [bar-card](https://github.com/custom-cards/bar-card) via HACS**
+
+<details >
+
+<summary> ℹ️ Code here</summary>
 
 ```yaml
 type: vertical-stack
@@ -950,13 +1012,17 @@ cards:
       {% endif %}
 ```
 
----
+</details>
 
 ## 🔥 Mini Graph Card (Custom card)
 
 Displays a graph of download speed over time.
 
 **⚠️ Requires [mini-graph-card](https://github.com/kalkih/mini-graph-card) installation via HACS**
+
+<details >
+
+<summary> ℹ️ Code here</summary>
 
 ```yaml
 type: custom:mini-graph-card
@@ -979,13 +1045,17 @@ show:
   fill: fade
 ```
 
----
+</details>
 
 ## 📊 ApexCharts (Advanced custom card)
 
 Advanced chart with multiple metrics.
 
 **⚠️ Requires [apexcharts-card](https://github.com/RomRider/apexcharts-card) installation via HACS**
+
+<details >
+
+<summary> ℹ️ Code here</summary>
 
 ```yaml
 type: custom:apexcharts-card
@@ -1026,11 +1096,15 @@ yaxis:
       tickAmount: 4
 ```
 
----
+</details>
 
 ## 🎯 Conditional Card
 
 Displays an alert only when downloads are active.
+
+<details >
+
+<summary> ℹ️ Code here</summary>
 
 ```yaml
 type: conditional
@@ -1050,11 +1124,15 @@ card:
   title: Download Station
 ```
 
----
+</details>
 
 ## 🔔 Notification Card
 
 Displays a banner at the top of the screen when a download is complete.
+
+<details >
+
+<summary> ℹ️ Code here</summary>
 
 ```yaml
 type: conditional
@@ -1078,11 +1156,15 @@ card:
       }
 ```
 
----
+</details>
 
 ## 🎨 Complete Dashboard
 
 A complete view combining multiple cards for a full overview.
+
+<details >
+
+<summary> ℹ️ Code here</summary>
 
 ```yaml
 type: vertical-stack
@@ -1144,7 +1226,7 @@ cards:
         icon: mdi:upload
 ```
 
----
+</details>
 
 ## 💡 Usage Tips
 
@@ -1154,6 +1236,11 @@ Sensors update every **60 seconds** by default.
 ### Suggested Automations
 
 **Notification when download completes:**
+
+<details >
+
+<summary> ℹ️ Code here</summary>
+
 ```yaml
 alias: Download Completed Notification
 trigger:
@@ -1170,8 +1257,14 @@ action:
       title: "Download Station"
       message: "All downloads are complete!"
 ```
+</details>
 
 **Slow speed alert:**
+
+<details >
+
+<summary> ℹ️ Code here</summary>
+
 ```yaml
 alias: Slow Download Speed Alert
 trigger:
@@ -1191,13 +1284,18 @@ action:
       message: "Download speed is abnormally low"
 ```
 
----
+</details>
 
 ## 🎨 Customization with Card-mod
 
 You can customize the appearance of any card with [card-mod](https://github.com/thomasloven/lovelace-card-mod).
 
 **Example:**
+
+<details >
+
+<summary> ℹ️ Code here</summary>
+
 ```yaml
 type: entities
 title: Download Station
@@ -1213,7 +1311,7 @@ card_mod:
     }
 ```
 
----
+</details>
 
 **💡 Tip:** Combine multiple cards to create your custom dashboard!
 

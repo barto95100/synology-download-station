@@ -10,6 +10,10 @@ Ce document présente différents exemples de cartes pour afficher les données 
 
 Une carte simple affichant tous les capteurs principaux.
 
+<details >
+
+<summary> ℹ️ Code disponible</summary>
+
 ```yaml
 type: entities
 title: Synology Download Station
@@ -30,13 +34,16 @@ entities:
     name: Taille totale
     icon: mdi:harddisk
 ```
-
----
+</details>
 
 ## 🎯 Vue compacte avec icônes / Compact View with Icons
 
 Affichage compact avec grandes icônes, parfait pour un tableau de bord.
 
+
+<details >
+
+<summary> ℹ️ Code disponible</summary>
 
 ```yaml
 type: glance
@@ -54,13 +61,16 @@ show_name: true
 show_icon: true
 show_state: true
 ```
-
----
+</details >
 
 ## 📈 Jauge de progression / Progress Gauge
 
 Affiche la progression des téléchargements sous forme de jauge circulaire.
 
+
+<details >
+
+<summary> ℹ️ Code disponible  </summary>
 
 ```yaml
 type: gauge
@@ -74,13 +84,16 @@ severity:
   red: 0
 needle: true
 ```
-
----
+</details>
+  
 
 ## 🚀 Carte de statistiques / Statistics Card
 
 Cartes modernes avec graphique intégré (nécessite `statistic` configuré sur les capteurs).
 
+<details >
+
+<summary> ℹ️ Code disponible</summary>
 
 ```yaml
 type: statistic
@@ -92,7 +105,7 @@ stat_type: mean
 name: Vitesse moyenne
 ```
 
----
+</details>
 
 ## 📋 Liste détaillée des téléchargements / Detailed Download List
 
@@ -100,6 +113,10 @@ Affiche chaque téléchargement avec toutes ses informations (comme dans l'inter
 
 
 ### Version 1 : Liste compacte avec barres de progression
+
+<details >
+
+<summary> ℹ️ Code disponible</summary>
 
 ```yaml
 type: markdown
@@ -130,9 +147,13 @@ content: |
   {% endif %}
 ```
 
----
+</details>
 
 ### Version 2 : Style tableau détaillé
+
+<details >
+
+<summary> ℹ️ Code disponible</summary>
 
 ```yaml
 type: markdown
@@ -150,11 +171,16 @@ content: |
   {% endif %}
 ```
 
----
+</details>
 
 ### Version 3 : Cartes individuelles avec custom:bar-card
 
 **⚠️ Nécessite [bar-card](https://github.com/custom-cards/bar-card) via HACS**
+
+
+<details >
+
+<summary> ℹ️ Code disponible</summary>
 
 ```yaml
 type: markdown
@@ -180,9 +206,13 @@ content: |
   {% endif %}
 ```
 
----
+</details>
 
 ### Version 4 : Dashboard complet avec graphique intégré
+  
+<details >
+
+<summary> ℹ️ Code disponible</summary>
 
 ```yaml
 type: vertical-stack
@@ -244,9 +274,13 @@ cards:
       {% endif %}
 ```
 
----
+</details>
 
 ### Version 5 : Style moderne avec icônes et couleurs
+
+<details >
+
+<summary> ℹ️ Code disponible</summary>
 
 ```yaml
 type: markdown
@@ -287,9 +321,13 @@ content: |
   {% endif %}
 ```
 
----
+</details>
 
 ### Version 6 : Carte Button-Card interactive (pleine largeur)
+
+<details >
+
+<summary> ℹ️ Code disponible</summary>
 
 **⚠️ Nécessite [button-card](https://github.com/custom-cards/button-card) via HACS**
 
@@ -446,11 +484,15 @@ custom_fields:
 card_size: auto
 ```
 
----
+</details>
 
 ### Version 7 : Mushroom Cards (Style moderne)
 
 **⚠️ Nécessite [mushroom](https://github.com/piitaya/lovelace-mushroom) via HACS**
+
+<details >
+
+<summary> ℹ️ Code disponible</summary>
 
 ```yaml
 type: vertical-stack
@@ -534,11 +576,15 @@ cards:
       {% endif %}
 ```
 
----
+</details>
 
 ### Version 8 : Auto-Entities avec cartes dynamiques
 
 **⚠️ Nécessite [auto-entities](https://github.com/thomasloven/lovelace-auto-entities) et [card-mod](https://github.com/thomasloven/lovelace-card-mod) via HACS**
+
+<details >
+
+<summary> ℹ️ Code disponible</summary>
 
 ```yaml
 type: vertical-stack
@@ -573,11 +619,15 @@ cards:
       title: Tous les capteurs
 ```
 
----
+</details>
 
 ### Version 9 : Style Media Player (Élégant)
 
 **⚠️ Nécessite [button-card](https://github.com/custom-cards/button-card) via HACS**
+
+<details >
+
+<summary> ℹ️ Code disponible</summary>
 
 ```yaml
 type: custom:button-card
@@ -698,11 +748,15 @@ custom_fields:
     ]]]
 ```
 
----
+</details>
 
 ### Version 10 : Compact Grid Style (Grille compacte)
 
 **⚠️ Nécessite [button-card](https://github.com/custom-cards/button-card) via HACS**
+
+<details >
+
+<summary> ℹ️ Code disponible</summary>
 
 ```yaml
 type: custom:button-card
@@ -814,11 +868,15 @@ custom_fields:
     ]]]
 ```
 
----
+</details>
 
 ### Version 11 : Swipe Card (Navigation horizontale)
 
 **⚠️ Nécessite [swipe-card](https://github.com/bramkragten/swipe-card) via HACS**
+
+<details >
+
+<summary> ℹ️ Code disponible</summary>
 
 ```yaml
 type: custom:swipe-card
@@ -902,11 +960,15 @@ cards:
       {% endif %}
 ```
 
----
+</details>
 
 ### Version 12 : Bar Card (Barres horizontales)
 
 **⚠️ Nécessite [bar-card](https://github.com/custom-cards/bar-card) via HACS**
+
+<details >
+
+<summary> ℹ️ Code disponible</summary>
 
 ```yaml
 type: vertical-stack
@@ -956,11 +1018,15 @@ cards:
       {% endif %}
 ```
 
----
+</details>
 
 ## 🎨 Dashboard complet / Complete Dashboard
 
 Une vue complète combinant plusieurs cartes pour un aperçu complet.
+
+<details >
+
+<summary> ℹ️ Code disponible</summary>
 
 ```yaml
 type: vertical-stack
@@ -1022,7 +1088,7 @@ cards:
         icon: mdi:upload
 ```
 
----
+</details>
 
 ## 🔥 Mini Graph Card (Carte personnalisée)
 
@@ -1031,6 +1097,10 @@ Affiche un graphique de la vitesse de téléchargement dans le temps.
 **⚠️ Nécessite l'installation de [mini-graph-card](https://github.com/kalkih/mini-graph-card) via HACS**
 
 *⚠️ Requires [mini-graph-card](https://github.com/kalkih/mini-graph-card) installation via HACS*
+
+<details >
+
+<summary> ℹ️ Code disponible</summary>
 
 ```yaml
 type: custom:mini-graph-card
@@ -1053,7 +1123,7 @@ show:
   fill: fade
 ```
 
----
+</details>
 
 ## 📊 ApexCharts (Carte personnalisée avancée)
 
@@ -1062,6 +1132,10 @@ Graphique avancé avec plusieurs métriques.
 **⚠️ Nécessite l'installation de [apexcharts-card](https://github.com/RomRider/apexcharts-card) via HACS**
 
 *⚠️ Requires [apexcharts-card](https://github.com/RomRider/apexcharts-card) installation via HACS*
+
+<details >
+
+<summary> ℹ️ Code disponible</summary>
 
 ```yaml
 type: custom:apexcharts-card
@@ -1102,11 +1176,15 @@ yaxis:
       tickAmount: 4
 ```
 
----
+</details>
 
-## 🎯 Carte conditionnelle / Conditional Card
+## 🎯 Carte conditionnelle
 
 Affiche une alerte uniquement si des téléchargements sont actifs.
+
+<details >
+
+<summary> ℹ️ Code disponible</summary>
 
 ```yaml
 type: conditional
@@ -1126,11 +1204,15 @@ card:
   title: Download Station
 ```
 
----
+</details>
 
-## 🔔 Carte de notification / Notification Card
+## 🔔 Carte de notification
 
 Affiche une bannière en haut de l'écran quand un téléchargement est terminé.
+
+<details >
+
+<summary> ℹ️ Code disponible</summary>
 
 ```yaml
 type: conditional
@@ -1154,16 +1236,20 @@ card:
       }
 ```
 
----
+</details>
 
-## 💡 Conseils d'utilisation / Usage Tips
+## 💡 Conseils d'utilisation
 
-### Actualisation des données / Data Refresh
+### Actualisation des données
 Les capteurs se mettent à jour toutes les **60 secondes** par défaut.
 
-### Automatisations suggérées / Suggested Automations
+### Automatisations suggérées
 
 **Notification quand un téléchargement est terminé:**
+<details >
+
+<summary> ℹ️ Code disponible</summary>
+
 ```yaml
 alias: Notification téléchargement terminé
 trigger:
@@ -1180,8 +1266,16 @@ action:
       title: "Download Station"
       message: "Tous les téléchargements sont terminés !"
 ```
+</details>
+
+
 
 **Alerte vitesse lente:**
+
+<details >
+
+<summary> ℹ️ Code disponible</summary>
+
 ```yaml
 alias: Alerte vitesse de téléchargement lente
 trigger:
@@ -1201,13 +1295,18 @@ action:
       message: "La vitesse de téléchargement est anormalement basse"
 ```
 
----
+</details>
 
 ## 🎨 Personnalisation avec Card-mod
 
 Vous pouvez personnaliser l'apparence de n'importe quelle carte avec [card-mod](https://github.com/thomasloven/lovelace-card-mod).
 
 **Exemple:**
+
+<details >
+
+<summary> ℹ️ Code disponible</summary>
+
 ```yaml
 type: entities
 title: Download Station
@@ -1223,6 +1322,7 @@ card_mod:
     }
 ```
 
----
+</details>
 
+\
 **💡 Astuce:** Combinez plusieurs cartes pour créer votre tableau de bord personnalisé !
