@@ -98,7 +98,7 @@ entities:
     name: Progress
 ```
 
-**📖 For more card examples (gauges, graphs, custom cards, etc.), check out the [LOVELACE_EXAMPLES.md](LOVELACE_EXAMPLES.md) file!**
+**📖 For more card examples (gauges, graphs, custom cards, etc.), check out the [LOVELACE_EXAMPLES_EN.md](LOVELACE_EXAMPLES_EN.md) file!**
 
 ### Automation - Download Complete Notification
 

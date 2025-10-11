@@ -1,58 +1,54 @@
-# Exemples de Cartes Lovelace
+# Lovelace Card Examples
 
-Ce document présente différents exemples de cartes pour afficher les données de votre Synology Download Station dans Home Assistant.
+This document presents various card examples to display your Synology Download Station data in Home Assistant.
 
-**🇬🇧 English version available:** [LOVELACE_EXAMPLES_EN.md](LOVELACE_EXAMPLES_EN.md)
+**🇫🇷 Version française disponible :** [LOVELACE_EXAMPLES.md](LOVELACE_EXAMPLES.md)
 
 ---
 
-## 📊 Vue d'ensemble simple / Simple Overview
+## 📊 Simple Overview
 
-Une carte simple affichant tous les capteurs principaux.
-
-*A simple card displaying all main sensors.*
+A simple card displaying all main sensors.
 
 ```yaml
 type: entities
 title: Synology Download Station
 entities:
   - entity: sensor.synology_download_station_active_downloads
-    name: Téléchargements actifs
+    name: Active Downloads
     icon: mdi:download
   - entity: sensor.synology_download_station_total_speed
-    name: Vitesse totale
+    name: Total Speed
     icon: mdi:speedometer
   - entity: sensor.synology_download_station_download_progress
-    name: Progression
+    name: Progress
     icon: mdi:progress-download
   - entity: sensor.synology_download_station_total_downloaded
-    name: Total téléchargé
+    name: Total Downloaded
     icon: mdi:download-network
   - entity: sensor.synology_download_station_total_size
-    name: Taille totale
+    name: Total Size
     icon: mdi:harddisk
 ```
 
 ---
 
-## 🎯 Vue compacte avec icônes / Compact View with Icons
+## 🎯 Compact View with Icons
 
-Affichage compact avec grandes icônes, parfait pour un tableau de bord.
-
-*Compact display with large icons, perfect for a dashboard.*
+Compact display with large icons, perfect for a dashboard.
 
 ```yaml
 type: glance
 title: Download Station
 entities:
   - entity: sensor.synology_download_station_active_downloads
-    name: Actifs
+    name: Active
   - entity: sensor.synology_download_station_total_speed
-    name: Vitesse
+    name: Speed
   - entity: sensor.synology_download_station_download_progress
-    name: Progression
+    name: Progress
   - entity: sensor.synology_download_station_total_downloaded
-    name: Téléchargé
+    name: Downloaded
 show_name: true
 show_icon: true
 show_state: true
@@ -60,16 +56,14 @@ show_state: true
 
 ---
 
-## 📈 Jauge de progression / Progress Gauge
+## 📈 Progress Gauge
 
-Affiche la progression des téléchargements sous forme de jauge circulaire.
-
-*Displays download progress as a circular gauge.*
+Displays download progress as a circular gauge.
 
 ```yaml
 type: gauge
 entity: sensor.synology_download_station_download_progress
-name: Progression des téléchargements
+name: Download Progress
 min: 0
 max: 100
 severity:
@@ -81,11 +75,9 @@ needle: true
 
 ---
 
-## 🚀 Carte de statistiques / Statistics Card
+## 🚀 Statistics Card
 
-Cartes modernes avec graphique intégré (nécessite `statistic` configuré sur les capteurs).
-
-*Modern cards with integrated graphs (requires `statistic` configured on sensors).*
+Modern cards with integrated graphs (requires `statistic` configured on sensors).
 
 ```yaml
 type: statistic
@@ -94,22 +86,20 @@ period:
   calendar:
     period: hour
 stat_type: mean
-name: Vitesse moyenne
+name: Average Speed
 ```
 
 ---
 
-## 📋 Liste détaillée des téléchargements / Detailed Download List
+## 📋 Detailed Download List
 
-Affiche chaque téléchargement avec toutes ses informations (comme dans l'interface Synology).
+Displays each download with all its information (like in the Synology interface).
 
-*Displays each download with all its information (like in the Synology interface).*
-
-### Version 1 : Liste compacte avec barres de progression
+### Version 1: Compact list with progress bars
 
 ```yaml
 type: markdown
-title: 📥 Téléchargements actifs
+title: 📥 Active Downloads
 content: |
   {% set downloads = state_attr('sensor.synology_download_station_active_downloads', 'downloads') %}
   {% if downloads and downloads|length > 0 %}
@@ -131,40 +121,38 @@ content: |
     {% endfor %}
   {% else %}
   <div style="text-align: center; padding: 20px; color: #999;">
-  *Aucun téléchargement en cours*
+  *No active downloads*
   </div>
   {% endif %}
 ```
 
 ---
 
-### Version 2 : Style tableau détaillé
+### Version 2: Detailed table style
 
 ```yaml
 type: markdown
-title: 📥 Téléchargements en cours
+title: 📥 Downloads in Progress
 content: |
   {% set downloads = state_attr('sensor.synology_download_station_active_downloads', 'downloads') %}
   {% if downloads and downloads|length > 0 %}
-  | Fichier | Vitesse | Statut | Taille | Téléchargé | Progression |
-  |---------|---------|--------|--------|------------|-------------|
+  | File | Speed | Status | Size | Downloaded | Progress |
+  |------|-------|--------|------|------------|----------|
     {% for download in downloads %}
   | {{ download.title[:30] }}... | {{ (download.speed / (1024**2)) | round(2) }} MB/s | {{ download.status }} | {{ (download.size / (1024**3)) | round(2) }} GB | {{ (download.downloaded / (1024**3)) | round(2) }} GB | {{ download.progress | round(1) }}% |
     {% endfor %}
   {% else %}
-  *Aucun téléchargement en cours*
+  *No active downloads*
   {% endif %}
 ```
 
 ---
 
-### Version 3 : Cartes individuelles avec custom:bar-card
-
-**⚠️ Nécessite [bar-card](https://github.com/custom-cards/bar-card) via HACS**
+### Version 3: Individual cards
 
 ```yaml
 type: markdown
-title: Téléchargements
+title: Downloads
 content: |
   {% set downloads = state_attr('sensor.synology_download_station_active_downloads', 'downloads') %}
   {% if downloads and downloads|length > 0 %}
@@ -172,38 +160,38 @@ content: |
   ---
   ### 📥 {{ download.title }}
   
-  | Info | Valeur |
-  |------|--------|
-  | **Vitesse** | {{ (download.speed / (1024**2)) | round(2) }} MB/s |
-  | **Statut** | {{ download.status }} |
-  | **Taille** | {{ (download.size / (1024**3)) | round(2) }} GB |
-  | **Téléchargé** | {{ (download.downloaded / (1024**3)) | round(2) }} GB |
-  | **Progression** | {{ download.progress | round(1) }}% |
+  | Info | Value |
+  |------|-------|
+  | **Speed** | {{ (download.speed / (1024**2)) | round(2) }} MB/s |
+  | **Status** | {{ download.status }} |
+  | **Size** | {{ (download.size / (1024**3)) | round(2) }} GB |
+  | **Downloaded** | {{ (download.downloaded / (1024**3)) | round(2) }} GB |
+  | **Progress** | {{ download.progress | round(1) }}% |
   
     {% endfor %}
   {% else %}
-  *Aucun téléchargement en cours*
+  *No active downloads*
   {% endif %}
 ```
 
 ---
 
-### Version 4 : Dashboard complet avec graphique intégré
+### Version 4: Complete dashboard with integrated graph
 
 ```yaml
 type: vertical-stack
 cards:
-  # Résumé global
+  # Global summary
   - type: glance
     entities:
       - entity: sensor.synology_download_station_active_downloads
-        name: Téléchargements
+        name: Downloads
       - entity: sensor.synology_download_station_total_speed
-        name: Vitesse totale
+        name: Total Speed
     
-  # Liste des téléchargements
+  # Download list
   - type: markdown
-    title: 📋 Détails des téléchargements
+    title: 📋 Download Details
     content: |
       {% set downloads = state_attr('sensor.synology_download_station_active_downloads', 'downloads') %}
       {% if downloads and downloads|length > 0 %}
@@ -215,23 +203,23 @@ cards:
       <div style="padding: 10px 0;">
         <table style="width: 100%; margin-top: 10px;">
           <tr>
-            <td style="padding: 5px;"><strong>🚀 Vitesse:</strong></td>
+            <td style="padding: 5px;"><strong>🚀 Speed:</strong></td>
             <td style="padding: 5px;">{{ (download.speed / (1024**2)) | round(2) }} MB/s</td>
           </tr>
           <tr>
-            <td style="padding: 5px;"><strong>📊 Statut:</strong></td>
+            <td style="padding: 5px;"><strong>📊 Status:</strong></td>
             <td style="padding: 5px;">{{ download.status }}</td>
           </tr>
           <tr>
-            <td style="padding: 5px;"><strong>💾 Taille:</strong></td>
+            <td style="padding: 5px;"><strong>💾 Size:</strong></td>
             <td style="padding: 5px;">{{ (download.size / (1024**3)) | round(2) }} GB</td>
           </tr>
           <tr>
-            <td style="padding: 5px;"><strong>⬇️ Téléchargé:</strong></td>
+            <td style="padding: 5px;"><strong>⬇️ Downloaded:</strong></td>
             <td style="padding: 5px;">{{ (download.downloaded / (1024**3)) | round(2) }} GB</td>
           </tr>
           <tr>
-            <td style="padding: 5px;"><strong>📈 Progression:</strong></td>
+            <td style="padding: 5px;"><strong>📈 Progress:</strong></td>
             <td style="padding: 5px;">
               <div style="background: rgba(50,50,50,0.5); height: 20px; border-radius: 10px; overflow: hidden;">
                 <div style="background: linear-gradient(90deg, #4CAF50, #8BC34A); height: 100%; width: {{ download.progress }}%;"></div>
@@ -245,14 +233,14 @@ cards:
         {% endfor %}
       {% else %}
       <div style="text-align: center; padding: 30px; color: #999;">
-        ℹ️ Aucun téléchargement en cours
+        ℹ️ No downloads in progress
       </div>
       {% endif %}
 ```
 
 ---
 
-### Version 5 : Style moderne avec icônes et couleurs
+### Version 5: Modern style with icons and colors
 
 ```yaml
 type: markdown
@@ -271,11 +259,11 @@ content: |
     
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
       <div>
-        <div style="color: #aaa; font-size: 12px;">VITESSE</div>
+        <div style="color: #aaa; font-size: 12px;">SPEED</div>
         <div style="color: #fff; font-size: 18px; font-weight: bold;">{{ (download.speed / (1024**2)) | round(2) }} <span style="font-size: 12px;">MB/s</span></div>
       </div>
       <div>
-        <div style="color: #aaa; font-size: 12px;">TÉLÉCHARGÉ</div>
+        <div style="color: #aaa; font-size: 12px;">DOWNLOADED</div>
         <div style="color: #fff; font-size: 18px; font-weight: bold;">{{ (download.downloaded / (1024**3)) | round(2) }} <span style="font-size: 12px;">/ {{ (download.size / (1024**3)) | round(2) }} GB</span></div>
       </div>
     </div>
@@ -288,21 +276,21 @@ content: |
   {% else %}
   <div style="text-align: center; padding: 40px; background: rgba(100,100,100,0.2); border-radius: 12px; color: #999;">
     <div style="font-size: 48px; margin-bottom: 10px;">✓</div>
-    <div style="font-size: 18px;">Aucun téléchargement en cours</div>
+    <div style="font-size: 18px;">No downloads in progress</div>
   </div>
   {% endif %}
 ```
 
 ---
 
-### Version 6 : Carte Button-Card interactive (pleine largeur)
+### Version 6: Button-Card interactive (full width)
 
-**⚠️ Nécessite [button-card](https://github.com/custom-cards/button-card) via HACS**
+**⚠️ Requires [button-card](https://github.com/custom-cards/button-card) via HACS**
 
 ```yaml
 type: custom:button-card
 entity: sensor.synology_download_station_active_downloads
-name: Téléchargements Synology
+name: Synology Downloads
 show_name: true
 show_state: false
 show_icon: true
@@ -328,25 +316,25 @@ custom_fields:
     [[[
       const downloads = entity.attributes.downloads || [];
       
-      // Fonction pour formater la taille automatiquement en Mo ou Go
+      // Function to automatically format size in MB or GB
       const formatSize = (bytes) => {
         const gb = bytes / (1024 ** 3);
         const mb = bytes / (1024 ** 2);
         if (gb >= 1) {
-          return `${gb.toFixed(2)} Go`;
+          return `${gb.toFixed(2)} GB`;
         } else {
-          return `${mb.toFixed(2)} Mo`;
+          return `${mb.toFixed(2)} MB`;
         }
       };
       
-      // Fonction pour formater la vitesse
+      // Function to format speed
       const formatSpeed = (bytesPerSec) => {
         const mbps = bytesPerSec / (1024 ** 2);
         if (mbps >= 1) {
-          return `${mbps.toFixed(2)} Mo/s`;
+          return `${mbps.toFixed(2)} MB/s`;
         } else {
           const kbps = bytesPerSec / 1024;
-          return `${kbps.toFixed(2)} Ko/s`;
+          return `${kbps.toFixed(2)} KB/s`;
         }
       };
       
@@ -361,7 +349,7 @@ custom_fields:
             margin-top: 10px;
           ">
             <div style="font-size: 40px; margin-bottom: 10px;">✓</div>
-            <div style="font-size: 14px;">Aucun téléchargement actif</div>
+            <div style="font-size: 14px;">No active downloads</div>
           </div>
         `;
       }
@@ -376,7 +364,7 @@ custom_fields:
           position: relative;
           overflow: hidden;
         ">
-          <!-- Barre de progression en arrière-plan -->
+          <!-- Background progress bar -->
           <div style="
             position: absolute;
             top: 0;
@@ -388,9 +376,9 @@ custom_fields:
             z-index: 0;
           "></div>
           
-          <!-- Contenu -->
+          <!-- Content -->
           <div style="position: relative; z-index: 1;">
-            <!-- Titre et progression -->
+            <!-- Title and progress -->
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
               <div style="font-weight: bold; font-size: 13px; color: #fff; flex: 1; padding-right: 10px;">
                 ${dl.title.length > 50 ? dl.title.substring(0, 50) + '...' : dl.title}
@@ -408,7 +396,7 @@ custom_fields:
               </div>
             </div>
             
-            <!-- Informations détaillées -->
+            <!-- Detailed information -->
             <div style="
               display: grid;
               grid-template-columns: repeat(3, 1fr);
@@ -417,20 +405,20 @@ custom_fields:
               color: #ddd;
             ">
               <div>
-                <span style="color: #aaa;">⚡ Vitesse:</span><br/>
+                <span style="color: #aaa;">⚡ Speed:</span><br/>
                 <strong style="color: #fff;">${formatSpeed(dl.speed)}</strong>
               </div>
               <div>
-                <span style="color: #aaa;">📁 Taille:</span><br/>
+                <span style="color: #aaa;">📁 Size:</span><br/>
                 <strong style="color: #fff;">${formatSize(dl.size)}</strong>
               </div>
               <div>
-                <span style="color: #aaa;">⬇️ Téléchargé:</span><br/>
+                <span style="color: #aaa;">⬇️ Downloaded:</span><br/>
                 <strong style="color: #fff;">${formatSize(dl.downloaded)}</strong>
               </div>
             </div>
             
-            <!-- Barre de progression visuelle -->
+            <!-- Visual progress bar -->
             <div style="
               height: 6px;
               background: rgba(0,0,0,0.3);
@@ -454,41 +442,41 @@ card_size: auto
 
 ---
 
-### Version 7 : Mushroom Cards (Style moderne)
+### Version 7: Mushroom Cards (Modern style)
 
-**⚠️ Nécessite [mushroom](https://github.com/piitaya/lovelace-mushroom) via HACS**
+**⚠️ Requires [mushroom](https://github.com/piitaya/lovelace-mushroom) via HACS**
 
 ```yaml
 type: vertical-stack
 cards:
-  # En-tête avec chip
+  # Header with chip
   - type: custom:mushroom-title-card
     title: 📥 Download Station
     subtitle: Synology NAS
   
-  # Statistiques globales
+  # Global statistics
   - type: horizontal-stack
     cards:
       - type: custom:mushroom-entity-card
         entity: sensor.synology_download_station_active_downloads
-        name: Actifs
+        name: Active
         icon: mdi:download
         icon_color: blue
         layout: vertical
       - type: custom:mushroom-entity-card
         entity: sensor.synology_download_station_total_speed
-        name: Vitesse
+        name: Speed
         icon: mdi:speedometer
         icon_color: green
         layout: vertical
       - type: custom:mushroom-entity-card
         entity: sensor.synology_download_station_download_progress
-        name: Progression
+        name: Progress
         icon: mdi:progress-download
         icon_color: orange
         layout: vertical
   
-  # Liste des téléchargements
+  # Download list
   - type: markdown
     content: |
       {% set downloads = state_attr('sensor.synology_download_station_active_downloads', 'downloads') %}
@@ -511,8 +499,8 @@ cards:
               {{ download.title[:45] }}...
             </div>
             <div style="font-size: 12px; color: var(--secondary-text-color); display: flex; gap: 12px;">
-              <span>⚡ {{ (download.speed / (1024**2)) | round(2) }} Mo/s</span>
-              <span>📦 {{ (download.size / (1024**3)) | round(2) }} Go</span>
+              <span>⚡ {{ (download.speed / (1024**2)) | round(2) }} MB/s</span>
+              <span>📦 {{ (download.size / (1024**3)) | round(2) }} GB</span>
               <span style="color: #4CAF50; font-weight: bold;">{{ download.progress | round(1) }}%</span>
             </div>
           </div>
@@ -535,21 +523,21 @@ cards:
       {% else %}
       <ha-card style="text-align: center; padding: 30px; background: var(--card-background-color);">
         <div style="font-size: 48px; margin-bottom: 10px;">✓</div>
-        <div style="color: var(--secondary-text-color);">Aucun téléchargement</div>
+        <div style="color: var(--secondary-text-color);">No downloads</div>
       </ha-card>
       {% endif %}
 ```
 
 ---
 
-### Version 8 : Auto-Entities avec cartes dynamiques
+### Version 8: Auto-Entities with dynamic cards
 
-**⚠️ Nécessite [auto-entities](https://github.com/thomasloven/lovelace-auto-entities) et [card-mod](https://github.com/thomasloven/lovelace-card-mod) via HACS**
+**⚠️ Requires [auto-entities](https://github.com/thomasloven/lovelace-auto-entities) and [card-mod](https://github.com/thomasloven/lovelace-card-mod) via HACS**
 
 ```yaml
 type: vertical-stack
 cards:
-  # Résumé
+  # Summary
   - type: custom:mod-card
     style: |
       ha-card {
@@ -563,27 +551,27 @@ cards:
       show_state: true
       entities:
         - entity: sensor.synology_download_station_active_downloads
-          name: Téléchargements
+          name: Downloads
         - entity: sensor.synology_download_station_total_speed
-          name: Vitesse
+          name: Speed
         - entity: sensor.synology_download_station_download_progress
-          name: Progression
+          name: Progress
   
-  # Auto-génération des capteurs liés
+  # Auto-generation of related sensors
   - type: custom:auto-entities
     filter:
       include:
         - entity_id: sensor.synology_download_station_*
     card:
       type: entities
-      title: Tous les capteurs
+      title: All Sensors
 ```
 
 ---
 
-### Version 9 : Style Media Player (Élégant)
+### Version 9: Media Player Style (Elegant)
 
-**⚠️ Nécessite [button-card](https://github.com/custom-cards/button-card) via HACS**
+**⚠️ Requires [button-card](https://github.com/custom-cards/button-card) via HACS**
 
 ```yaml
 type: custom:button-card
@@ -627,7 +615,7 @@ custom_fields:
                 Download Station
               </div>
               <div style="font-size: 14px; color: rgba(255,255,255,0.8);">
-                ${states['sensor.synology_download_station_active_downloads'].state} téléchargement(s) actif(s)
+                ${states['sensor.synology_download_station_active_downloads'].state} active download(s)
               </div>
             </div>
             <div style="text-align: right;">
@@ -648,7 +636,7 @@ custom_fields:
         return `
           <div style="padding: 40px; text-align: center; color: #888;">
             <div style="font-size: 60px; margin-bottom: 15px;">✓</div>
-            <div style="font-size: 16px;">Tous les téléchargements sont terminés</div>
+            <div style="font-size: 16px;">All downloads completed</div>
           </div>
         `;
       }
@@ -669,8 +657,8 @@ custom_fields:
                   ${dl.title}
                 </div>
                 <div style="display: flex; gap: 16px; font-size: 12px; color: rgba(255,255,255,0.6);">
-                  <span>⚡ ${speedMb} Mo/s</span>
-                  <span>📦 ${downloadedGb} / ${sizeGb} Go</span>
+                  <span>⚡ ${speedMb} MB/s</span>
+                  <span>📦 ${downloadedGb} / ${sizeGb} GB</span>
                 </div>
               </div>
               <div style="
@@ -706,9 +694,9 @@ custom_fields:
 
 ---
 
-### Version 10 : Compact Grid Style (Grille compacte)
+### Version 10: Compact Grid Style
 
-**⚠️ Nécessite [button-card](https://github.com/custom-cards/button-card) via HACS**
+**⚠️ Requires [button-card](https://github.com/custom-cards/button-card) via HACS**
 
 ```yaml
 type: custom:button-card
@@ -731,7 +719,7 @@ custom_fields:
         return `
           <div style="text-align: center; padding: 30px; color: #666;">
             <div style="font-size: 40px; margin-bottom: 10px;">💤</div>
-            <div>Aucun téléchargement</div>
+            <div>No downloads</div>
           </div>
         `;
       }
@@ -789,12 +777,12 @@ custom_fields:
                     margin-bottom: 8px;
                   ">
                     <div>
-                      <div style="color: rgba(255,255,255,0.5); margin-bottom: 2px;">Vitesse</div>
-                      <div style="color: #4CAF50; font-weight: bold;">${speed} Mo/s</div>
+                      <div style="color: rgba(255,255,255,0.5); margin-bottom: 2px;">Speed</div>
+                      <div style="color: #4CAF50; font-weight: bold;">${speed} MB/s</div>
                     </div>
                     <div>
-                      <div style="color: rgba(255,255,255,0.5); margin-bottom: 2px;">Taille</div>
-                      <div style="color: #2196F3; font-weight: bold;">${size} Go</div>
+                      <div style="color: rgba(255,255,255,0.5); margin-bottom: 2px;">Size</div>
+                      <div style="color: #2196F3; font-weight: bold;">${size} GB</div>
                     </div>
                   </div>
                   
@@ -822,9 +810,9 @@ custom_fields:
 
 ---
 
-### Version 11 : Swipe Card (Navigation horizontale)
+### Version 11: Swipe Card (Horizontal navigation)
 
-**⚠️ Nécessite [swipe-card](https://github.com/bramkragten/swipe-card) via HACS**
+**⚠️ Requires [swipe-card](https://github.com/bramkragten/swipe-card) via HACS**
 
 ```yaml
 type: custom:swipe-card
@@ -887,14 +875,14 @@ cards:
           
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
             <div>
-              <div style="font-size: 12px; opacity: 0.8;">Vitesse</div>
+              <div style="font-size: 12px; opacity: 0.8;">Speed</div>
               <div style="font-size: 18px; font-weight: bold;">{{ (download.speed / (1024**2)) | round(2) }}</div>
-              <div style="font-size: 10px; opacity: 0.8;">Mo/s</div>
+              <div style="font-size: 10px; opacity: 0.8;">MB/s</div>
             </div>
             <div>
-              <div style="font-size: 12px; opacity: 0.8;">Taille</div>
+              <div style="font-size: 12px; opacity: 0.8;">Size</div>
               <div style="font-size: 18px; font-weight: bold;">{{ (download.size / (1024**3)) | round(2) }}</div>
-              <div style="font-size: 10px; opacity: 0.8;">Go</div>
+              <div style="font-size: 10px; opacity: 0.8;">GB</div>
             </div>
           </div>
         </div>
@@ -903,28 +891,28 @@ cards:
       {% else %}
       <ha-card style="width: 300px; text-align: center; padding: 40px;">
         <div style="font-size: 60px; margin-bottom: 10px;">✓</div>
-        <div>Aucun téléchargement</div>
+        <div>No downloads</div>
       </ha-card>
       {% endif %}
 ```
 
 ---
 
-### Version 12 : Bar Card (Barres horizontales)
+### Version 12: Bar Card (Horizontal bars)
 
-**⚠️ Nécessite [bar-card](https://github.com/custom-cards/bar-card) via HACS**
+**⚠️ Requires [bar-card](https://github.com/custom-cards/bar-card) via HACS**
 
 ```yaml
 type: vertical-stack
 cards:
-  # En-tête
+  # Header
   - type: markdown
     content: |
       <div style="text-align: center; padding: 10px; font-size: 20px; font-weight: bold;">
-        📥 Download Station - {{ states('sensor.synology_download_station_active_downloads') }} téléchargement(s)
+        📥 Download Station - {{ states('sensor.synology_download_station_active_downloads') }} download(s)
       </div>
   
-  # Liste avec barres
+  # List with bars
   - type: markdown
     content: |
       {% set downloads = state_attr('sensor.synology_download_station_active_downloads', 'downloads') %}
@@ -954,8 +942,8 @@ cards:
           color: white;
           text-shadow: 0 1px 2px rgba(0,0,0,0.5);
         ">
-          <span>⚡ {{ (download.speed / (1024**2)) | round(2) }} Mo/s</span>
-          <span>📦 {{ (download.size / (1024**3)) | round(2) }} Go</span>
+          <span>⚡ {{ (download.speed / (1024**2)) | round(2) }} MB/s</span>
+          <span>📦 {{ (download.size / (1024**3)) | round(2) }} GB</span>
         </div>
       </div>
         {% endfor %}
@@ -964,91 +952,19 @@ cards:
 
 ---
 
-## 🎨 Dashboard complet / Complete Dashboard
+## 🔥 Mini Graph Card (Custom card)
 
-Une vue complète combinant plusieurs cartes pour un aperçu complet.
+Displays a graph of download speed over time.
 
-*A complete view combining multiple cards for a full overview.*
-
-```yaml
-type: vertical-stack
-cards:
-  # En-tête avec statistiques principales
-  - type: glance
-    title: Download Station - Vue d'ensemble
-    entities:
-      - entity: sensor.synology_download_station_active_downloads
-        name: Actifs
-      - entity: sensor.synology_download_station_active_uploads
-        name: Seeds
-      - entity: sensor.synology_download_station_total_speed
-        name: Vitesse
-    show_name: true
-    show_icon: true
-    show_state: true
-
-  # Barre de progression
-  - type: custom:bar-card
-    entity: sensor.synology_download_station_download_progress
-    name: Progression globale
-    icon: mdi:progress-download
-    positions:
-      icon: inside
-      indicator: inside
-      name: inside
-    height: 50px
-    color: '#4CAF50'
-
-  # Détails des téléchargements
-  - type: markdown
-    title: 📥 Téléchargements actifs
-    content: |
-      {% set downloads = state_attr('sensor.synology_download_station_active_downloads', 'downloads') %}
-      {% if downloads and downloads|length > 0 %}
-        {% for download in downloads %}
-      **{{ download.title }}**
-      `{{ download.progress | round(1) }}%` • {{ (download.speed / (1024**2)) | round(2) }} MB/s
-      ---
-        {% endfor %}
-      {% else %}
-      *Aucun téléchargement en cours*
-      {% endif %}
-
-  # Informations détaillées
-  - type: entities
-    title: Détails
-    entities:
-      - entity: sensor.synology_download_station_total_downloaded
-        name: Total téléchargé
-        icon: mdi:download-network
-      - entity: sensor.synology_download_station_total_size
-        name: Taille totale
-        icon: mdi:harddisk
-      - type: divider
-      - entity: sensor.synology_download_station_active_uploads
-        name: Fichiers en seed
-        icon: mdi:upload
-```
-
----
-
-## 🔥 Mini Graph Card (Carte personnalisée)
-
-Affiche un graphique de la vitesse de téléchargement dans le temps.
-
-*Displays a graph of download speed over time.*
-
-**⚠️ Nécessite l'installation de [mini-graph-card](https://github.com/kalkih/mini-graph-card) via HACS**
-
-*⚠️ Requires [mini-graph-card](https://github.com/kalkih/mini-graph-card) installation via HACS*
+**⚠️ Requires [mini-graph-card](https://github.com/kalkih/mini-graph-card) installation via HACS**
 
 ```yaml
 type: custom:mini-graph-card
-name: Vitesse de téléchargement
+name: Download Speed
 icon: mdi:speedometer
 entities:
   - entity: sensor.synology_download_station_total_speed
-    name: Vitesse
+    name: Speed
     color: '#3498db'
 hours_to_show: 24
 points_per_hour: 4
@@ -1065,15 +981,11 @@ show:
 
 ---
 
-## 📊 ApexCharts (Carte personnalisée avancée)
+## 📊 ApexCharts (Advanced custom card)
 
-Graphique avancé avec plusieurs métriques.
+Advanced chart with multiple metrics.
 
-*Advanced chart with multiple metrics.*
-
-**⚠️ Nécessite l'installation de [apexcharts-card](https://github.com/RomRider/apexcharts-card) via HACS**
-
-*⚠️ Requires [apexcharts-card](https://github.com/RomRider/apexcharts-card) installation via HACS*
+**⚠️ Requires [apexcharts-card](https://github.com/RomRider/apexcharts-card) installation via HACS**
 
 ```yaml
 type: custom:apexcharts-card
@@ -1087,7 +999,7 @@ span:
   start: day
 series:
   - entity: sensor.synology_download_station_total_speed
-    name: Vitesse
+    name: Speed
     color: '#2196F3'
     stroke_width: 2
     type: area
@@ -1097,7 +1009,7 @@ series:
       func: avg
       duration: 5min
   - entity: sensor.synology_download_station_download_progress
-    name: Progression
+    name: Progress
     color: '#4CAF50'
     stroke_width: 2
     type: line
@@ -1116,11 +1028,9 @@ yaxis:
 
 ---
 
-## 🎯 Carte conditionnelle / Conditional Card
+## 🎯 Conditional Card
 
-Affiche une alerte uniquement si des téléchargements sont actifs.
-
-*Displays an alert only when downloads are active.*
+Displays an alert only when downloads are active.
 
 ```yaml
 type: conditional
@@ -1130,23 +1040,21 @@ conditions:
 card:
   type: markdown
   content: |
-    ## 🚀 Téléchargement en cours !
+    ## 🚀 Download in progress!
     
-    **{{ states('sensor.synology_download_station_active_downloads') }}** fichier(s) en téléchargement
+    **{{ states('sensor.synology_download_station_active_downloads') }}** file(s) downloading
     
-    **Vitesse actuelle:** {{ states('sensor.synology_download_station_total_speed') }} MB/s
+    **Current speed:** {{ states('sensor.synology_download_station_total_speed') }} MB/s
     
-    **Progression:** {{ states('sensor.synology_download_station_download_progress') }}%
+    **Progress:** {{ states('sensor.synology_download_station_download_progress') }}%
   title: Download Station
 ```
 
 ---
 
-## 🔔 Carte de notification / Notification Card
+## 🔔 Notification Card
 
-Affiche une bannière en haut de l'écran quand un téléchargement est terminé.
-
-*Displays a banner at the top of the screen when a download is complete.*
+Displays a banner at the top of the screen when a download is complete.
 
 ```yaml
 type: conditional
@@ -1158,9 +1066,9 @@ conditions:
 card:
   type: markdown
   content: |
-    ✅ **Tous les téléchargements sont terminés !**
+    ✅ **All downloads completed!**
     
-    Total téléchargé: {{ states('sensor.synology_download_station_total_downloaded') }} GB
+    Total downloaded: {{ states('sensor.synology_download_station_total_downloaded') }} GB
   card_mod:
     style: |
       ha-card {
@@ -1172,18 +1080,82 @@ card:
 
 ---
 
-## 💡 Conseils d'utilisation / Usage Tips
+## 🎨 Complete Dashboard
 
-### Actualisation des données / Data Refresh
-Les capteurs se mettent à jour toutes les **60 secondes** par défaut.
+A complete view combining multiple cards for a full overview.
 
-*Sensors update every **60 seconds** by default.*
-
-### Automatisations suggérées / Suggested Automations
-
-**Notification quand un téléchargement est terminé:**
 ```yaml
-alias: Notification téléchargement terminé
+type: vertical-stack
+cards:
+  # Header with main statistics
+  - type: glance
+    title: Download Station - Overview
+    entities:
+      - entity: sensor.synology_download_station_active_downloads
+        name: Active
+      - entity: sensor.synology_download_station_active_uploads
+        name: Seeds
+      - entity: sensor.synology_download_station_total_speed
+        name: Speed
+    show_name: true
+    show_icon: true
+    show_state: true
+
+  # Progress bar
+  - type: custom:bar-card
+    entity: sensor.synology_download_station_download_progress
+    name: Overall Progress
+    icon: mdi:progress-download
+    positions:
+      icon: inside
+      indicator: inside
+      name: inside
+    height: 50px
+    color: '#4CAF50'
+
+  # Download details
+  - type: markdown
+    title: 📥 Active Downloads
+    content: |
+      {% set downloads = state_attr('sensor.synology_download_station_active_downloads', 'downloads') %}
+      {% if downloads and downloads|length > 0 %}
+        {% for download in downloads %}
+      **{{ download.title }}**
+      `{{ download.progress | round(1) }}%` • {{ (download.speed / (1024**2)) | round(2) }} MB/s
+      ---
+        {% endfor %}
+      {% else %}
+      *No downloads in progress*
+      {% endif %}
+
+  # Detailed information
+  - type: entities
+    title: Details
+    entities:
+      - entity: sensor.synology_download_station_total_downloaded
+        name: Total Downloaded
+        icon: mdi:download-network
+      - entity: sensor.synology_download_station_total_size
+        name: Total Size
+        icon: mdi:harddisk
+      - type: divider
+      - entity: sensor.synology_download_station_active_uploads
+        name: Files seeding
+        icon: mdi:upload
+```
+
+---
+
+## 💡 Usage Tips
+
+### Data Refresh
+Sensors update every **60 seconds** by default.
+
+### Suggested Automations
+
+**Notification when download completes:**
+```yaml
+alias: Download Completed Notification
 trigger:
   - platform: state
     entity_id: sensor.synology_download_station_download_progress
@@ -1196,12 +1168,12 @@ action:
   - service: notify.mobile_app_your_phone
     data:
       title: "Download Station"
-      message: "Tous les téléchargements sont terminés !"
+      message: "All downloads are complete!"
 ```
 
-**Alerte vitesse lente:**
+**Slow speed alert:**
 ```yaml
-alias: Alerte vitesse de téléchargement lente
+alias: Slow Download Speed Alert
 trigger:
   - platform: numeric_state
     entity_id: sensor.synology_download_station_total_speed
@@ -1216,18 +1188,16 @@ action:
   - service: notify.mobile_app_your_phone
     data:
       title: "Download Station"
-      message: "La vitesse de téléchargement est anormalement basse"
+      message: "Download speed is abnormally low"
 ```
 
 ---
 
-## 🎨 Personnalisation avec Card-mod
+## 🎨 Customization with Card-mod
 
-Vous pouvez personnaliser l'apparence de n'importe quelle carte avec [card-mod](https://github.com/thomasloven/lovelace-card-mod).
+You can customize the appearance of any card with [card-mod](https://github.com/thomasloven/lovelace-card-mod).
 
-*You can customize the appearance of any card with [card-mod](https://github.com/thomasloven/lovelace-card-mod).*
-
-**Exemple:**
+**Example:**
 ```yaml
 type: entities
 title: Download Station
@@ -1245,7 +1215,7 @@ card_mod:
 
 ---
 
-**💡 Astuce:** Combinez plusieurs cartes pour créer votre tableau de bord personnalisé !
-
 **💡 Tip:** Combine multiple cards to create your custom dashboard!
+
+**🇫🇷 Version française :** [LOVELACE_EXAMPLES.md](LOVELACE_EXAMPLES.md)
 
