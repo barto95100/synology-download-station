@@ -1,9 +1,9 @@
 # Synology Download Station for Home Assistant
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/custom-components/hacs)
-[![GitHub Release](https://img.shields.io/github/v/release/VOTRE-USERNAME-GITHUB/synology-download-station)](https://github.com/VOTRE-USERNAME-GITHUB/synology-download-station/releases)
-[![License](https://img.shields.io/github/license/VOTRE-USERNAME-GITHUB/synology-download-station)](LICENSE)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/VOTRE-USERNAME-GITHUB/synology-download-station/graphs/commit-activity)
+[![GitHub Release](https://img.shields.io/github/v/release/barto95100/synology-download-station)](https://github.com/barto95100/synology-download-station/releases)
+[![License](https://img.shields.io/github/license/barto95100/synology-download-station)](LICENSE)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/barto95100/synology-download-station/graphs/commit-activity)
 
 > **Intégration Home Assistant pour surveiller Synology Download Station en temps réel.**
 
