@@ -1,7 +1,5 @@
 {
   "name": "Synology Download Station",
-  "render_readme": true,
-  "domains": ["sensor"],
-  "iot_class": "Local Polling",
-  "homeassistant": "2023.1.0"
+  "country": "FR",
+  "homeassistant": "2024.10.0"
 }
