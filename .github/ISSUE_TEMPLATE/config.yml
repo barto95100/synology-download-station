@@ -9,7 +9,9 @@ contact_links:
   - name: 🎨 Exemples de cartes Lovelace / Lovelace Examples
     url: https://github.com/barto95100/synology-download-station/blob/main/LOVELACE_EXAMPLES.md
     about: Découvrez des exemples de cartes pour votre dashboard / Discover card examples for your dashboard
-  - name: 💬 Discussions GitHub
-    url: https://github.com/barto95100/synology-download-station/discussions
+  - name: 🌐 Forum HACF
+    url: https://forum.hacf.fr/t/integration-synology-download-station/12068
     about: Posez des questions à la communauté / Ask questions to the community
-
+  - name: 💬 Discord HACF
+    url: https://discord.gg/uZf9XHCDDT
+    about: Rejoignez la communauté sur Discord pour de l'aide en direct
