@@ -1,0 +1,139 @@
+name: 🐛 Rapport de bug / Bug Report
+description: Signalez un bug ou un problème avec l'intégration / Report a bug or issue with the integration
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci de prendre le temps de remplir ce rapport de bug !
+        *Thanks for taking the time to fill out this bug report!*
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description du problème / Problem Description
+      description: Décrivez clairement le problème rencontré / Clearly describe the problem you encountered
+      placeholder: |
+        Exemple / Example:
+        L'intégration ne se connecte pas à mon NAS Synology après la configuration.
+        The integration doesn't connect to my Synology NAS after configuration.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Étapes pour reproduire / Steps to Reproduce
+      description: Comment reproduire le problème ? / How to reproduce the issue?
+      placeholder: |
+        1. Aller dans Paramètres → Appareils et services / Go to Settings → Devices & Services
+        2. Ajouter l'intégration Synology Download Station / Add Synology Download Station integration
+        3. Entrer les informations de connexion / Enter connection information
+        4. Le problème apparaît / The issue appears
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Comportement attendu / Expected Behavior
+      description: Que devrait-il se passer normalement ? / What should happen normally?
+      placeholder: L'intégration devrait se connecter et créer les capteurs / The integration should connect and create sensors
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Comportement actuel / Actual Behavior
+      description: Que se passe-t-il réellement ? / What actually happens?
+      placeholder: Message d'erreur ou comportement inattendu / Error message or unexpected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: |
+        Copiez les logs de Home Assistant (Configuration → Logs).
+        Activez les logs de débogage si nécessaire (voir README).
+        
+        Copy Home Assistant logs (Configuration → Logs).
+        Enable debug logs if needed (see README).
+      placeholder: |
+        Collez vos logs ici / Paste your logs here
+      render: shell
+    validations:
+      required: false
+
+  - type: input
+    id: version
+    attributes:
+      label: Version de l'intégration / Integration Version
+      description: Quelle version utilisez-vous ? / Which version are you using?
+      placeholder: "v1.0.0"
+    validations:
+      required: true
+
+  - type: input
+    id: ha_version
+    attributes:
+      label: Version Home Assistant
+      description: Quelle version de Home Assistant ? / Which Home Assistant version?
+      placeholder: "2025.10.0"
+    validations:
+      required: true
+
+  - type: input
+    id: synology_model
+    attributes:
+      label: Modèle Synology / Synology Model
+      description: Quel modèle de NAS Synology ? / Which Synology NAS model?
+      placeholder: "DS920+, DS218+, etc."
+    validations:
+      required: true
+
+  - type: input
+    id: dsm_version
+    attributes:
+      label: Version DSM
+      description: Quelle version de DSM ? / Which DSM version?
+      placeholder: "DSM 7.2"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: installation
+    attributes:
+      label: Méthode d'installation / Installation Method
+      description: Comment avez-vous installé l'intégration ? / How did you install the integration?
+      options:
+        - HACS (dépôt personnalisé / custom repository)
+        - HACS (store par défaut / default store)
+        - Manuel / Manual
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Informations supplémentaires / Additional Information
+      description: Toute autre information utile / Any other useful information
+      placeholder: Configuration particulière, pare-feu, VPN, etc. / Specific configuration, firewall, VPN, etc.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: J'ai cherché dans les issues existantes / I searched existing issues
+          required: true
+        - label: J'ai lu la documentation / I read the documentation
+          required: true
+        - label: J'ai activé les logs de débogage / I enabled debug logs
+          required: false
+

@@ -1,0 +1,109 @@
+name: 💡 Demande de fonctionnalité / Feature Request
+description: Proposez une nouvelle fonctionnalité / Suggest a new feature
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Merci de proposer une amélioration !
+        *Thanks for suggesting an improvement!*
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problème / Problem
+      description: |
+        Quel problème cette fonctionnalité résoudrait-elle ?
+        What problem would this feature solve?
+      placeholder: |
+        Exemple / Example:
+        Je voudrais pouvoir mettre en pause/reprendre les téléchargements depuis Home Assistant.
+        I would like to pause/resume downloads from Home Assistant.
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solution proposée / Proposed Solution
+      description: Comment imaginez-vous cette fonctionnalité ? / How do you envision this feature?
+      placeholder: |
+        Exemple / Example:
+        Ajouter des services Home Assistant :
+        - synology_download_station.pause_download
+        - synology_download_station.resume_download
+        
+        Add Home Assistant services:
+        - synology_download_station.pause_download
+        - synology_download_station.resume_download
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives envisagées / Alternatives Considered
+      description: |
+        Avez-vous pensé à d'autres solutions ?
+        Have you thought about other solutions?
+      placeholder: Autres approches possibles / Other possible approaches
+    validations:
+      required: false
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Exemples / Examples
+      description: |
+        Exemples d'utilisation, captures d'écran, ou références
+        Usage examples, screenshots, or references
+      placeholder: |
+        - Lien vers une autre intégration similaire / Link to similar integration
+        - Capture d'écran de l'interface souhaitée / Screenshot of desired UI
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priorité / Priority
+      description: Quelle importance pour vous ? / How important is this for you?
+      options:
+        - Basse / Low - Ce serait bien d'avoir / Nice to have
+        - Moyenne / Medium - Améliorerait l'expérience / Would improve experience
+        - Haute / High - Fonctionnalité importante / Important feature
+    validations:
+      required: true
+
+  - type: dropdown
+    id: help
+    attributes:
+      label: Contribution
+      description: Seriez-vous prêt(e) à contribuer ? / Would you be willing to contribute?
+      options:
+        - Non, je ne peux pas / No, I cannot
+        - Peut-être, avec de l'aide / Maybe, with help
+        - Oui, je peux développer / Yes, I can develop
+        - Oui, je peux tester / Yes, I can test
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Informations supplémentaires / Additional Information
+      description: Toute autre information utile / Any other useful information
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: J'ai cherché dans les issues existantes / I searched existing issues
+          required: true
+        - label: Cette fonctionnalité est liée à Synology Download Station / This feature relates to Synology Download Station
+          required: true
+

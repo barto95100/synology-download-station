@@ -1,0 +1,89 @@
+name: ❓ Question / Support
+description: Posez une question ou demandez de l'aide / Ask a question or request help
+title: "[Question]: "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Besoin d'aide ? Nous sommes là pour vous !
+        *Need help? We're here for you!*
+        
+        **Avant de poser votre question / Before asking:**
+        - 📖 Consultez le [README](https://github.com/barto95100/synology-download-station/blob/main/README.md)
+        - 🎨 Consultez les [exemples Lovelace](https://github.com/barto95100/synology-download-station/blob/main/LOVELACE_EXAMPLES.md)
+        - 🔍 Cherchez dans les [issues existantes](https://github.com/barto95100/synology-download-station/issues)
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: Quelle est votre question ? / What is your question?
+      placeholder: |
+        Soyez aussi détaillé(e) que possible...
+        Be as detailed as possible...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Catégorie / Category
+      description: De quel type de question s'agit-il ? / What type of question is this?
+      options:
+        - Installation / Installation
+        - Configuration / Configuration
+        - Utilisation / Usage
+        - Cartes Lovelace / Lovelace Cards
+        - Automatisations / Automations
+        - Performance / Performance
+        - Autre / Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexte / Context
+      description: |
+        Informations sur votre configuration
+        Information about your setup
+      placeholder: |
+        - Version Home Assistant: 2025.10.0
+        - Version intégration: v1.0.0
+        - Modèle Synology: DS920+
+        - Version DSM: 7.2
+        - Méthode d'installation: HACS
+    validations:
+      required: false
+
+  - type: textarea
+    id: tried
+    attributes:
+      label: Ce que j'ai déjà essayé / What I Already Tried
+      description: Qu'avez-vous déjà tenté ? / What have you already attempted?
+      placeholder: |
+        - Redémarré Home Assistant
+        - Vérifié les logs
+        - Consulté la documentation
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Informations supplémentaires / Additional Information
+      description: Captures d'écran, logs, configuration YAML, etc. / Screenshots, logs, YAML configuration, etc.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: J'ai lu la documentation / I read the documentation
+          required: true
+        - label: J'ai cherché dans les issues existantes / I searched existing issues
+          required: true
+
