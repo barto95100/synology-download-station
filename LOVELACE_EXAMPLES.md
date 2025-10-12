@@ -4,274 +4,80 @@ Ce document présente différents exemples de cartes pour afficher les données 
 
 **🇬🇧 English version available:** [LOVELACE_EXAMPLES_EN.md](LOVELACE_EXAMPLES_EN.md)
 
----
+---  
 
-## 📊 Vue d'ensemble simple / Simple Overview
-
-Une carte simple affichant tous les capteurs principaux.
-
-<details >
-
-<summary> ℹ️ Code disponible</summary>
-
-```yaml
-type: entities
-title: Synology Download Station
-entities:
-  - entity: sensor.synology_download_station_active_downloads
-    name: Téléchargements actifs
-    icon: mdi:download
-  - entity: sensor.synology_download_station_total_speed
-    name: Vitesse totale
-    icon: mdi:speedometer
-  - entity: sensor.synology_download_station_download_progress
-    name: Progression
-    icon: mdi:progress-download
-  - entity: sensor.synology_download_station_total_downloaded
-    name: Total téléchargé
-    icon: mdi:download-network
-  - entity: sensor.synology_download_station_total_size
-    name: Taille totale
-    icon: mdi:harddisk
-```
-</details>
-
-## 🎯 Vue compacte avec icônes / Compact View with Icons
-
-Affichage compact avec grandes icônes, parfait pour un tableau de bord.
-
-
-<details >
-
-<summary> ℹ️ Code disponible</summary>
-
-```yaml
-type: glance
-title: Download Station
-entities:
-  - entity: sensor.synology_download_station_active_downloads
-    name: Actifs
-  - entity: sensor.synology_download_station_total_speed
-    name: Vitesse
-  - entity: sensor.synology_download_station_download_progress
-    name: Progression
-  - entity: sensor.synology_download_station_total_downloaded
-    name: Téléchargé
-show_name: true
-show_icon: true
-show_state: true
-```
-</details >
-
-## 📈 Jauge de progression / Progress Gauge
-
-Affiche la progression des téléchargements sous forme de jauge circulaire.
-
-
-<details >
-
-<summary> ℹ️ Code disponible  </summary>
-
-```yaml
-type: gauge
-entity: sensor.synology_download_station_download_progress
-name: Progression des téléchargements
-min: 0
-max: 100
-severity:
-  green: 80
-  yellow: 50
-  red: 0
-needle: true
-```
-</details>
-  
-
-## 🚀 Carte de statistiques / Statistics Card
-
-Cartes modernes avec graphique intégré (nécessite `statistic` configuré sur les capteurs).
-
-<details >
-
-<summary> ℹ️ Code disponible</summary>
-
-```yaml
-type: statistic
-entity: sensor.synology_download_station_total_speed
-period:
-  calendar:
-    period: hour
-stat_type: mean
-name: Vitesse moyenne
-```
-
-</details>
 
 ## 📋 Liste détaillée des téléchargements / Detailed Download List
 
 Affiche chaque téléchargement avec toutes ses informations (comme dans l'interface Synology).
 
 
-### Version 1 : Liste compacte avec barres de progression
+### Version 4 : Details telechargement avec collapse
+  
+![Alt text](/images%20card/image4.png "a title")
 
+![Alt text](/images%20card/image5.png "a title")
 <details >
 
 <summary> ℹ️ Code disponible</summary>
 
 ```yaml
 type: markdown
-title: 📥 Téléchargements actifs
-content: |
-  {% set downloads = state_attr('sensor.synology_download_station_active_downloads', 'downloads') %}
+title: 📋 Détails des téléchargements
+content: >
+  {% set downloads =
+  state_attr('sensor.synology_download_station_active_downloads', 'downloads')
+  %}
+
   {% if downloads and downloads|length > 0 %}
     {% for download in downloads %}
-  <div style="background: rgba(100,100,100,0.2); padding: 10px; margin: 10px 0; border-radius: 8px;">
-  <h3 style="margin: 0 0 10px 0; color: #fff;">📁 {{ download.title }}</h3>
-  
-  **Speed:** {{ (download.speed / (1024**2)) | round(2) }} MB/s | 
-  **Status:** {{ download.status }} | 
-  **Size:** {{ (download.size / (1024**3)) | round(2) }} GB | 
-  **Progress:** {{ download.progress | round(1) }}%
-  
-  **Downloaded:** {{ (download.downloaded / (1024**3)) | round(2) }} GB
-  
-  <div style="background: rgba(50,50,50,0.5); height: 20px; border-radius: 10px; overflow: hidden; margin-top: 10px;">
-    <div style="background: linear-gradient(90deg, #4CAF50, #8BC34A); height: 100%; width: {{ download.progress }}%; transition: width 0.3s;"></div>
+  <details style="background: rgba(100,100,100,0.2); padding: 10px; margin: 10px
+  0; border-radius: 8px;">
+
+  <summary style="cursor: pointer; font-weight: bold; font-size: 16px;">
+    📥 {{ download.title }} - {{ download.progress | round(1) }}%
+  </summary>
+
+  <div style="padding: 10px 0;">
+    <table style="width: 100%; margin-top: 10px;">
+      <tr>
+        <td style="padding: 5px;"><strong>🚀 Vitesse:</strong></td>
+        <td style="padding: 5px;">{{ (download.speed / (1024**2)) | round(2) }} MB/s</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px;"><strong>📊 Statut:</strong></td>
+        <td style="padding: 5px;">{{ download.status }}</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px;"><strong>💾 Taille:</strong></td>
+        <td style="padding: 5px;">{{ (download.size / (1024**3)) | round(2) }} GB</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px;"><strong>⬇️ Téléchargé:</strong></td>
+        <td style="padding: 5px;">{{ (download.downloaded / (1024**3)) | round(2) }} GB</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px;"><strong>📈 Progression:</strong></td>
+        <td style="padding: 5px;">
+          <div style="background: rgba(50,50,50,0.5); height: 20px; border-radius: 10px; overflow: hidden;">
+            <div style="background: linear-gradient(90deg, #4CAF50, #8BC34A); height: 100%; width: {{ download.progress }}%;"></div>
+          </div>
+          {{ download.progress | round(1) }}%
+        </td>
+      </tr>
+    </table>
   </div>
-  </div>
+
+  </details>
     {% endfor %}
   {% else %}
-  <div style="text-align: center; padding: 20px; color: #999;">
-  *Aucun téléchargement en cours*
+
+  <div style="text-align: center; padding: 30px; color: #999;">
+    ℹ️ Aucun téléchargement en cours
   </div>
+
   {% endif %}
-```
 
-</details>
-
-### Version 2 : Style tableau détaillé
-
-<details >
-
-<summary> ℹ️ Code disponible</summary>
-
-```yaml
-type: markdown
-title: 📥 Téléchargements en cours
-content: |
-  {% set downloads = state_attr('sensor.synology_download_station_active_downloads', 'downloads') %}
-  {% if downloads and downloads|length > 0 %}
-  | Fichier | Vitesse | Statut | Taille | Téléchargé | Progression |
-  |---------|---------|--------|--------|------------|-------------|
-    {% for download in downloads %}
-  | {{ download.title[:30] }}... | {{ (download.speed / (1024**2)) | round(2) }} MB/s | {{ download.status }} | {{ (download.size / (1024**3)) | round(2) }} GB | {{ (download.downloaded / (1024**3)) | round(2) }} GB | {{ download.progress | round(1) }}% |
-    {% endfor %}
-  {% else %}
-  *Aucun téléchargement en cours*
-  {% endif %}
-```
-
-</details>
-
-### Version 3 : Cartes individuelles avec custom:bar-card
-
-**⚠️ Nécessite [bar-card](https://github.com/custom-cards/bar-card) via HACS**
-
-
-<details >
-
-<summary> ℹ️ Code disponible</summary>
-
-```yaml
-type: markdown
-title: Téléchargements
-content: |
-  {% set downloads = state_attr('sensor.synology_download_station_active_downloads', 'downloads') %}
-  {% if downloads and downloads|length > 0 %}
-    {% for download in downloads %}
-  ---
-  ### 📥 {{ download.title }}
-  
-  | Info | Valeur |
-  |------|--------|
-  | **Vitesse** | {{ (download.speed / (1024**2)) | round(2) }} MB/s |
-  | **Statut** | {{ download.status }} |
-  | **Taille** | {{ (download.size / (1024**3)) | round(2) }} GB |
-  | **Téléchargé** | {{ (download.downloaded / (1024**3)) | round(2) }} GB |
-  | **Progression** | {{ download.progress | round(1) }}% |
-  
-    {% endfor %}
-  {% else %}
-  *Aucun téléchargement en cours*
-  {% endif %}
-```
-
-</details>
-
-### Version 4 : Dashboard complet avec graphique intégré
-  
-<details >
-
-<summary> ℹ️ Code disponible</summary>
-
-```yaml
-type: vertical-stack
-cards:
-  # Résumé global
-  - type: glance
-    entities:
-      - entity: sensor.synology_download_station_active_downloads
-        name: Téléchargements
-      - entity: sensor.synology_download_station_total_speed
-        name: Vitesse totale
-    
-  # Liste des téléchargements
-  - type: markdown
-    title: 📋 Détails des téléchargements
-    content: |
-      {% set downloads = state_attr('sensor.synology_download_station_active_downloads', 'downloads') %}
-      {% if downloads and downloads|length > 0 %}
-        {% for download in downloads %}
-      <details style="background: rgba(100,100,100,0.2); padding: 10px; margin: 10px 0; border-radius: 8px;">
-      <summary style="cursor: pointer; font-weight: bold; font-size: 16px;">
-        📥 {{ download.title }} - {{ download.progress | round(1) }}%
-      </summary>
-      <div style="padding: 10px 0;">
-        <table style="width: 100%; margin-top: 10px;">
-          <tr>
-            <td style="padding: 5px;"><strong>🚀 Vitesse:</strong></td>
-            <td style="padding: 5px;">{{ (download.speed / (1024**2)) | round(2) }} MB/s</td>
-          </tr>
-          <tr>
-            <td style="padding: 5px;"><strong>📊 Statut:</strong></td>
-            <td style="padding: 5px;">{{ download.status }}</td>
-          </tr>
-          <tr>
-            <td style="padding: 5px;"><strong>💾 Taille:</strong></td>
-            <td style="padding: 5px;">{{ (download.size / (1024**3)) | round(2) }} GB</td>
-          </tr>
-          <tr>
-            <td style="padding: 5px;"><strong>⬇️ Téléchargé:</strong></td>
-            <td style="padding: 5px;">{{ (download.downloaded / (1024**3)) | round(2) }} GB</td>
-          </tr>
-          <tr>
-            <td style="padding: 5px;"><strong>📈 Progression:</strong></td>
-            <td style="padding: 5px;">
-              <div style="background: rgba(50,50,50,0.5); height: 20px; border-radius: 10px; overflow: hidden;">
-                <div style="background: linear-gradient(90deg, #4CAF50, #8BC34A); height: 100%; width: {{ download.progress }}%;"></div>
-              </div>
-              {{ download.progress | round(1) }}%
-            </td>
-          </tr>
-        </table>
-      </div>
-      </details>
-        {% endfor %}
-      {% else %}
-      <div style="text-align: center; padding: 30px; color: #999;">
-        ℹ️ Aucun téléchargement en cours
-      </div>
-      {% endif %}
 ```
 
 </details>
@@ -323,13 +129,16 @@ content: |
 
 </details>
 
-### Version 6 : Carte Button-Card interactive (pleine largeur)
+### Version 6a : Carte Button-Card interactive (pleine largeur)
+
+**⚠️ Nécessite [button-card](https://github.com/custom-cards/button-card) via HACS**
+
+![Alt text](/images%20card/image2.png "a title")
+
 
 <details >
 
 <summary> ℹ️ Code disponible</summary>
-
-**⚠️ Nécessite [button-card](https://github.com/custom-cards/button-card) via HACS**
 
 ```yaml
 type: custom:button-card
@@ -486,144 +295,11 @@ card_size: auto
 
 </details>
 
-### Version 7 : Mushroom Cards (Style moderne)
 
-**⚠️ Nécessite [mushroom](https://github.com/piitaya/lovelace-mushroom) via HACS**
+### Version 6b : Carte Button-Card interactive (pleine largeur)
 
-<details >
+![Alt text](/images%20card/image3.png "a title")
 
-<summary> ℹ️ Code disponible</summary>
-
-```yaml
-type: vertical-stack
-cards:
-  # En-tête avec chip
-  - type: custom:mushroom-title-card
-    title: 📥 Download Station
-    subtitle: Synology NAS
-  
-  # Statistiques globales
-  - type: horizontal-stack
-    cards:
-      - type: custom:mushroom-entity-card
-        entity: sensor.synology_download_station_active_downloads
-        name: Actifs
-        icon: mdi:download
-        icon_color: blue
-        layout: vertical
-      - type: custom:mushroom-entity-card
-        entity: sensor.synology_download_station_total_speed
-        name: Vitesse
-        icon: mdi:speedometer
-        icon_color: green
-        layout: vertical
-      - type: custom:mushroom-entity-card
-        entity: sensor.synology_download_station_download_progress
-        name: Progression
-        icon: mdi:progress-download
-        icon_color: orange
-        layout: vertical
-  
-  # Liste des téléchargements
-  - type: markdown
-    content: |
-      {% set downloads = state_attr('sensor.synology_download_station_active_downloads', 'downloads') %}
-      {% if downloads and downloads|length > 0 %}
-        {% for download in downloads %}
-      <ha-card style="background: var(--card-background-color); padding: 12px; margin: 8px 0; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <div style="
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #4CAF50, #8BC34A);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-          ">📥</div>
-          <div style="flex: 1;">
-            <div style="font-weight: 600; font-size: 14px; margin-bottom: 4px;">
-              {{ download.title[:45] }}...
-            </div>
-            <div style="font-size: 12px; color: var(--secondary-text-color); display: flex; gap: 12px;">
-              <span>⚡ {{ (download.speed / (1024**2)) | round(2) }} Mo/s</span>
-              <span>📦 {{ (download.size / (1024**3)) | round(2) }} Go</span>
-              <span style="color: #4CAF50; font-weight: bold;">{{ download.progress | round(1) }}%</span>
-            </div>
-          </div>
-        </div>
-        <div style="
-          height: 4px;
-          background: rgba(0,0,0,0.1);
-          border-radius: 10px;
-          overflow: hidden;
-          margin-top: 8px;
-        ">
-          <div style="
-            height: 100%;
-            width: {{ download.progress }}%;
-            background: linear-gradient(90deg, #4CAF50, #8BC34A);
-          "></div>
-        </div>
-      </ha-card>
-        {% endfor %}
-      {% else %}
-      <ha-card style="text-align: center; padding: 30px; background: var(--card-background-color);">
-        <div style="font-size: 48px; margin-bottom: 10px;">✓</div>
-        <div style="color: var(--secondary-text-color);">Aucun téléchargement</div>
-      </ha-card>
-      {% endif %}
-```
-
-</details>
-
-### Version 8 : Auto-Entities avec cartes dynamiques
-
-**⚠️ Nécessite [auto-entities](https://github.com/thomasloven/lovelace-auto-entities) et [card-mod](https://github.com/thomasloven/lovelace-card-mod) via HACS**
-
-<details >
-
-<summary> ℹ️ Code disponible</summary>
-
-```yaml
-type: vertical-stack
-cards:
-  # Résumé
-  - type: custom:mod-card
-    style: |
-      ha-card {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-      }
-    card:
-      type: glance
-      show_name: true
-      show_icon: true
-      show_state: true
-      entities:
-        - entity: sensor.synology_download_station_active_downloads
-          name: Téléchargements
-        - entity: sensor.synology_download_station_total_speed
-          name: Vitesse
-        - entity: sensor.synology_download_station_download_progress
-          name: Progression
-  
-  # Auto-génération des capteurs liés
-  - type: custom:auto-entities
-    filter:
-      include:
-        - entity_id: sensor.synology_download_station_*
-    card:
-      type: entities
-      title: Tous les capteurs
-```
-
-</details>
-
-### Version 9 : Style Media Player (Élégant)
-
-**⚠️ Nécessite [button-card](https://github.com/custom-cards/button-card) via HACS**
 
 <details >
 
@@ -632,127 +308,104 @@ cards:
 ```yaml
 type: custom:button-card
 entity: sensor.synology_download_station_active_downloads
-show_name: false
-show_icon: false
 show_state: false
+show_name: false
+show_icon: true
+icon: mdi:download
 styles:
   card:
-    - width: 100%
     - height: auto
-    - background: |
-        [[[
-          return 'linear-gradient(to bottom, rgba(20,20,20,0.95), rgba(30,30,30,0.95))';
-        ]]]
-    - border-radius: 16px
-    - padding: 0
-    - box-shadow: 0 8px 16px rgba(0,0,0,0.3)
+    - padding: 0 0 0 0
+    - margin: 0
+    - box-sizing: border-box
+  name:
+    - font-size: 20px
+    - font-weight: bold
+    - margin-bottom: 20px
 custom_fields:
-  header: |
-    [[[
-      return `
-        <div style="
-          padding: 20px;
-          background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-          border-radius: 16px 16px 0 0;
-        ">
-          <div style="display: flex; align-items: center; gap: 15px;">
-            <div style="
-              width: 60px;
-              height: 60px;
-              background: rgba(255,255,255,0.2);
-              border-radius: 12px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              font-size: 30px;
-            ">📥</div>
-            <div style="flex: 1;">
-              <div style="font-size: 20px; font-weight: bold; color: white; margin-bottom: 4px;">
-                Download Station
-              </div>
-              <div style="font-size: 14px; color: rgba(255,255,255,0.8);">
-                ${states['sensor.synology_download_station_active_downloads'].state} téléchargement(s) actif(s)
-              </div>
-            </div>
-            <div style="text-align: right;">
-              <div style="font-size: 24px; font-weight: bold; color: white;">
-                ${states['sensor.synology_download_station_total_speed'].state}
-              </div>
-              <div style="font-size: 12px; color: rgba(255,255,255,0.8);">MB/s</div>
-            </div>
-          </div>
-        </div>
-      `;
-    ]]]
   downloads: |
     [[[
       const downloads = entity.attributes.downloads || [];
-      
       if (downloads.length === 0) {
-        return `
-          <div style="padding: 40px; text-align: center; color: #888;">
-            <div style="font-size: 60px; margin-bottom: 15px;">✓</div>
-            <div style="font-size: 16px;">Tous les téléchargements sont terminés</div>
-          </div>
-        `;
+        return '<div style="padding: 10px; text-align: center; color: #888;">Aucun téléchargement actif</div>';
       }
-      
-      return downloads.map((dl, index) => {
-        const sizeGb = (dl.size / (1024 ** 3)).toFixed(2);
-        const downloadedGb = (dl.downloaded / (1024 ** 3)).toFixed(2);
-        const speedMb = (dl.speed / (1024 ** 2)).toFixed(2);
-        
+
+      return downloads.map(dl => {
+        const percent = (typeof dl.progress === 'number' ? dl.progress : 0);
+        const percentStr = percent.toFixed(1);
+        const pctClamp = Math.min(Math.max(percent, 0), 100);
+
+        const speed = (dl.speed / 1048576).toFixed(2);
+
+        // Calcul taille dynamique
+        let sizeStr = '';
+        if (dl.size >= 1073741824) { // 1 Go = 1024*1024*1024 = 1073741824 octets
+          sizeStr = (dl.size / 1073741824).toFixed(2) + ' Go';
+        } else {
+          sizeStr = (dl.size / 1048576).toFixed(0) + ' Mo';
+        }
+
         return `
-          <div style="
-            padding: 16px 20px;
-            ${index < downloads.length - 1 ? 'border-bottom: 1px solid rgba(255,255,255,0.1);' : ''}
-          ">
-            <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
-              <div style="flex: 1; padding-right: 15px;">
-                <div style="color: white; font-weight: 500; font-size: 14px; margin-bottom: 6px; line-height: 1.4;">
-                  ${dl.title}
-                </div>
-                <div style="display: flex; gap: 16px; font-size: 12px; color: rgba(255,255,255,0.6);">
-                  <span>⚡ ${speedMb} Mo/s</span>
-                  <span>📦 ${downloadedGb} / ${sizeGb} Go</span>
-                </div>
-              </div>
-              <div style="
-                min-width: 60px;
-                text-align: center;
-                background: ${dl.progress >= 80 ? 'rgba(76,175,80,0.2)' : 'rgba(33,150,243,0.2)'};
-                padding: 8px 12px;
-                border-radius: 12px;
-              ">
-                <div style="font-size: 16px; font-weight: bold; color: ${dl.progress >= 80 ? '#4CAF50' : '#2196F3'};">
-                  ${dl.progress.toFixed(1)}%
-                </div>
-              </div>
-            </div>
-            
-            <div style="position: relative; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden;">
-              <div style="
-                position: absolute;
-                height: 100%;
-                width: ${dl.progress}%;
-                background: linear-gradient(90deg, 
-                  ${dl.progress >= 80 ? '#4CAF50, #8BC34A' : '#2196F3, #64B5F6'}
-                );
-                border-radius: 10px;
-                transition: width 0.5s ease;
-              "></div>
-            </div>
+        <div style="
+          width: 100%;
+          border: 1px solid #444;
+          border-radius: 8px;
+          padding: 12px 8px 12px 8px;
+          margin: 8px 0;
+          background: #232323;
+          color: white;
+          box-sizing: border-box;
+        ">
+          <div style="font-weight:bold;font-size:15px;margin-bottom:10px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;max-width:100%;">
+            ${dl.title.length > 50 ? dl.title.substring(0, 50) + '...' : dl.title}
           </div>
+          <div style="
+              width: 100%; 
+              background: #282828; 
+              border-radius: 6px; 
+              height: 15px; 
+              position: relative; 
+              margin-bottom: 12px; 
+              overflow: hidden;
+            ">
+            <div style="
+              background: #39c447;
+              width: ${pctClamp}%;
+              height: 100%;
+              border-radius: 6px;
+              transition: width 0.5s;
+              position: absolute; left: 0; top: 0;
+            "></div>
+            <span style="
+              position: absolute;
+              left: 50%; top: 50%; 
+              transform: translate(-50%,-50%);
+              font-size: 12px;
+              color: white;
+              font-weight: bold;
+              z-index: 1;
+              text-shadow: 1px 1px 2px #222;
+            ">${percentStr}%</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px;">
+            <span>⚡ ${speed} Mo/s</span>
+            <span>📁 ${sizeStr}</span>
+            <span>📤 ${dl.status === 'downloading' ? '⬇️' : '🌱'}</span>
+          </div>
+        </div>
         `;
       }).join('');
     ]]]
+layout: vertical
+
 ```
 
 </details>
 
-### Version 10 : Compact Grid Style (Grille compacte)
+### Version 6c : Carte Button-Card interactive (pleine largeur)
 
-**⚠️ Nécessite [button-card](https://github.com/custom-cards/button-card) via HACS**
+![Alt text](/images%20card/image6.png "a title")
+
 
 <details >
 
@@ -866,105 +519,153 @@ custom_fields:
         </div>
       `;
     ]]]
+
+
 ```
 
 </details>
 
-### Version 11 : Swipe Card (Navigation horizontale)
+### Version 6d : Carte Button-Card interactive (pleine largeur)
 
-**⚠️ Nécessite [swipe-card](https://github.com/bramkragten/swipe-card) via HACS**
+![Alt text](/images%20card/image8.png "a title")
+
+![Alt text](/images%20card/image9.png "a title")
 
 <details >
 
 <summary> ℹ️ Code disponible</summary>
 
 ```yaml
-type: custom:swipe-card
-parameters:
-  effect: coverflow
-  grabCursor: true
-  centeredSlides: true
-  slidesPerView: auto
-  coverflowEffect:
-    rotate: 50
-    stretch: 0
-    depth: 100
-    modifier: 1
-    slideShadows: true
-cards:
-  - type: markdown
-    content: |
-      {% set downloads = state_attr('sensor.synology_download_station_active_downloads', 'downloads') %}
-      {% if downloads and downloads|length > 0 %}
-        {% for download in downloads %}
-      <ha-card style="
-        width: 300px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        padding: 20px;
-        border-radius: 16px;
-        color: white;
-      ">
-        <div style="text-align: center;">
-          <div style="font-size: 60px; margin-bottom: 10px;">📥</div>
-          <div style="font-size: 16px; font-weight: bold; margin-bottom: 15px; line-height: 1.4;">
-            {{ download.title[:40] }}...
-          </div>
-          
-          <div style="
-            width: 120px;
-            height: 120px;
-            margin: 20px auto;
-            border-radius: 50%;
-            background: conic-gradient(
-              #4CAF50 {{ download.progress }}%,
-              rgba(255,255,255,0.2) {{ download.progress }}%
-            );
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-          ">
+type: custom:button-card
+entity: sensor.synology_download_station_active_downloads
+show_name: false
+show_icon: false
+show_state: false
+styles:
+  card:
+    - width: 100%
+    - height: auto
+    - background: 'linear-gradient(to bottom, rgba(20,20,20,0.95), rgba(30,30,30,0.95))'
+    - border-radius: 16px
+    - padding: 0
+    - box-shadow: 0 8px 16px rgba(0,0,0,0.3)
+  custom_fields:
+    content:
+      - padding: 0
+custom_fields:
+  content: |
+    [[[
+      const downloads = entity.attributes.downloads || [];
+      
+      // Header
+      let output = `
+        <div style="
+          padding: 20px;
+          background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+          border-radius: 16px 16px 0 0;
+        ">
+          <div style="display: flex; align-items: center; gap: 15px;">
             <div style="
-              width: 100px;
-              height: 100px;
-              background: rgba(0,0,0,0.3);
-              border-radius: 50%;
+              width: 60px;
+              height: 60px;
+              background: rgba(255,255,255,0.2);
+              border-radius: 12px;
               display: flex;
               align-items: center;
               justify-content: center;
-              font-size: 24px;
-              font-weight: bold;
-            ">{{ download.progress | round(1) }}%</div>
-          </div>
-          
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
-            <div>
-              <div style="font-size: 12px; opacity: 0.8;">Vitesse</div>
-              <div style="font-size: 18px; font-weight: bold;">{{ (download.speed / (1024**2)) | round(2) }}</div>
-              <div style="font-size: 10px; opacity: 0.8;">Mo/s</div>
+              font-size: 30px;
+            ">📥</div>
+            <div style="flex: 1;">
+              <div style="font-size: 20px; font-weight: bold; color: white; margin-bottom: 4px;">
+                Download Station
+              </div>
+              <div style="font-size: 14px; color: rgba(255,255,255,0.8);">
+                ${states['sensor.synology_download_station_active_downloads'].state} téléchargement(s) actif(s)
+              </div>
             </div>
-            <div>
-              <div style="font-size: 12px; opacity: 0.8;">Taille</div>
-              <div style="font-size: 18px; font-weight: bold;">{{ (download.size / (1024**3)) | round(2) }}</div>
-              <div style="font-size: 10px; opacity: 0.8;">Go</div>
+            <div style="text-align: right;">
+              <div style="font-size: 24px; font-weight: bold; color: white;">
+                ${states['sensor.synology_download_station_total_speed'].state}
+              </div>
+              <div style="font-size: 12px; color: rgba(255,255,255,0.8);">MB/s</div>
             </div>
           </div>
         </div>
-      </ha-card>
-        {% endfor %}
-      {% else %}
-      <ha-card style="width: 300px; text-align: center; padding: 40px;">
-        <div style="font-size: 60px; margin-bottom: 10px;">✓</div>
-        <div>Aucun téléchargement</div>
-      </ha-card>
-      {% endif %}
+      `;
+      
+      // Downloads list
+      if (downloads.length === 0) {
+        output += `
+          <div style="padding: 40px; text-align: center; color: #888;">
+            <div style="font-size: 60px; margin-bottom: 15px;">✓</div>
+            <div style="font-size: 16px;">Tous les téléchargements sont terminés</div>
+          </div>
+        `;
+      } else {
+        output += downloads.map((dl, index) => {
+          const sizeGb = (dl.size / (1024 ** 3)).toFixed(2);
+          const downloadedGb = (dl.downloaded / (1024 ** 3)).toFixed(2);
+          const speedMb = (dl.speed / (1024 ** 2)).toFixed(2);
+          
+          return `
+            <div style="
+              padding: 16px 20px;
+              ${index < downloads.length - 1 ? 'border-bottom: 1px solid rgba(255,255,255,0.1);' : ''}
+            ">
+              <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                <div style="flex: 1; padding-right: 15px;">
+                  <div style="color: white; font-weight: 500; font-size: 14px; margin-bottom: 6px; line-height: 1.4;">
+                    ${dl.title}
+                  </div>
+                  <div style="display: flex; gap: 16px; font-size: 12px; color: rgba(255,255,255,0.6);">
+                    <span>⚡ ${speedMb} Mo/s</span>
+                    <span>📦 ${downloadedGb} / ${sizeGb} Go</span>
+                  </div>
+                </div>
+                <div style="
+                  min-width: 60px;
+                  text-align: center;
+                  background: ${dl.progress >= 80 ? 'rgba(76,175,80,0.2)' : 'rgba(33,150,243,0.2)'};
+                  padding: 8px 12px;
+                  border-radius: 12px;
+                ">
+                  <div style="font-size: 16px; font-weight: bold; color: ${dl.progress >= 80 ? '#4CAF50' : '#2196F3'};">
+                    ${dl.progress.toFixed(1)}%
+                  </div>
+                </div>
+              </div>
+              
+              <div style="position: relative; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden;">
+                <div style="
+                  position: absolute;
+                  height: 100%;
+                  width: ${dl.progress}%;
+                  background: linear-gradient(90deg, 
+                    ${dl.progress >= 80 ? '#4CAF50, #8BC34A' : '#2196F3, #64B5F6'}
+                  );
+                  border-radius: 10px;
+                  transition: width 0.5s ease;
+                "></div>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+      
+      return output;
+    ]]]
+
 ```
 
 </details>
 
-### Version 12 : Bar Card (Barres horizontales)
+
+### Version 12 : markdown  / Verticales card 
 
 **⚠️ Nécessite [bar-card](https://github.com/custom-cards/bar-card) via HACS**
+
+
+![Alt text](/images%20card/image7.png "a title")
 
 <details >
 
@@ -1020,167 +721,13 @@ cards:
 
 </details>
 
-## 🎨 Dashboard complet / Complete Dashboard
-
-Une vue complète combinant plusieurs cartes pour un aperçu complet.
-
-<details >
-
-<summary> ℹ️ Code disponible</summary>
-
-```yaml
-type: vertical-stack
-cards:
-  # En-tête avec statistiques principales
-  - type: glance
-    title: Download Station - Vue d'ensemble
-    entities:
-      - entity: sensor.synology_download_station_active_downloads
-        name: Actifs
-      - entity: sensor.synology_download_station_active_uploads
-        name: Seeds
-      - entity: sensor.synology_download_station_total_speed
-        name: Vitesse
-    show_name: true
-    show_icon: true
-    show_state: true
-
-  # Barre de progression
-  - type: custom:bar-card
-    entity: sensor.synology_download_station_download_progress
-    name: Progression globale
-    icon: mdi:progress-download
-    positions:
-      icon: inside
-      indicator: inside
-      name: inside
-    height: 50px
-    color: '#4CAF50'
-
-  # Détails des téléchargements
-  - type: markdown
-    title: 📥 Téléchargements actifs
-    content: |
-      {% set downloads = state_attr('sensor.synology_download_station_active_downloads', 'downloads') %}
-      {% if downloads and downloads|length > 0 %}
-        {% for download in downloads %}
-      **{{ download.title }}**
-      `{{ download.progress | round(1) }}%` • {{ (download.speed / (1024**2)) | round(2) }} MB/s
-      ---
-        {% endfor %}
-      {% else %}
-      *Aucun téléchargement en cours*
-      {% endif %}
-
-  # Informations détaillées
-  - type: entities
-    title: Détails
-    entities:
-      - entity: sensor.synology_download_station_total_downloaded
-        name: Total téléchargé
-        icon: mdi:download-network
-      - entity: sensor.synology_download_station_total_size
-        name: Taille totale
-        icon: mdi:harddisk
-      - type: divider
-      - entity: sensor.synology_download_station_active_uploads
-        name: Fichiers en seed
-        icon: mdi:upload
-```
-
-</details>
-
-## 🔥 Mini Graph Card (Carte personnalisée)
-
-Affiche un graphique de la vitesse de téléchargement dans le temps.
-
-**⚠️ Nécessite l'installation de [mini-graph-card](https://github.com/kalkih/mini-graph-card) via HACS**
-
-*⚠️ Requires [mini-graph-card](https://github.com/kalkih/mini-graph-card) installation via HACS*
-
-<details >
-
-<summary> ℹ️ Code disponible</summary>
-
-```yaml
-type: custom:mini-graph-card
-name: Vitesse de téléchargement
-icon: mdi:speedometer
-entities:
-  - entity: sensor.synology_download_station_total_speed
-    name: Vitesse
-    color: '#3498db'
-hours_to_show: 24
-points_per_hour: 4
-line_width: 3
-font_size: 75
-animate: true
-show:
-  name: true
-  icon: true
-  state: true
-  legend: false
-  fill: fade
-```
-
-</details>
-
-## 📊 ApexCharts (Carte personnalisée avancée)
-
-Graphique avancé avec plusieurs métriques.
-
-**⚠️ Nécessite l'installation de [apexcharts-card](https://github.com/RomRider/apexcharts-card) via HACS**
-
-*⚠️ Requires [apexcharts-card](https://github.com/RomRider/apexcharts-card) installation via HACS*
-
-<details >
-
-<summary> ℹ️ Code disponible</summary>
-
-```yaml
-type: custom:apexcharts-card
-header:
-  show: true
-  title: Synology Download Station
-  show_states: true
-  colorize_states: true
-graph_span: 24h
-span:
-  start: day
-series:
-  - entity: sensor.synology_download_station_total_speed
-    name: Vitesse
-    color: '#2196F3'
-    stroke_width: 2
-    type: area
-    opacity: 0.3
-    yaxis_id: speed
-    group_by:
-      func: avg
-      duration: 5min
-  - entity: sensor.synology_download_station_download_progress
-    name: Progression
-    color: '#4CAF50'
-    stroke_width: 2
-    type: line
-    yaxis_id: progress
-yaxis:
-  - id: speed
-    apex_config:
-      tickAmount: 4
-  - id: progress
-    opposite: true
-    min: 0
-    max: 100
-    apex_config:
-      tickAmount: 4
-```
-
-</details>
 
 ## 🎯 Carte conditionnelle
 
 Affiche une alerte uniquement si des téléchargements sont actifs.
+
+![Alt text](/images%20card/image1.png "a title")
+
 
 <details >
 
@@ -1206,37 +753,6 @@ card:
 
 </details>
 
-## 🔔 Carte de notification
-
-Affiche une bannière en haut de l'écran quand un téléchargement est terminé.
-
-<details >
-
-<summary> ℹ️ Code disponible</summary>
-
-```yaml
-type: conditional
-conditions:
-  - entity: sensor.synology_download_station_download_progress
-    state: "100"
-  - entity: sensor.synology_download_station_active_downloads
-    state: "0"
-card:
-  type: markdown
-  content: |
-    ✅ **Tous les téléchargements sont terminés !**
-    
-    Total téléchargé: {{ states('sensor.synology_download_station_total_downloaded') }} GB
-  card_mod:
-    style: |
-      ha-card {
-        background-color: #4CAF50;
-        color: white;
-        text-align: center;
-      }
-```
-
-</details>
 
 ## 💡 Conseils d'utilisation
 
@@ -1297,7 +813,7 @@ action:
 
 </details>
 
-## 🎨 Personnalisation avec Card-mod
+
 
 Vous pouvez personnaliser l'apparence de n'importe quelle carte avec [card-mod](https://github.com/thomasloven/lovelace-card-mod).
 
