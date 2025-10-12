@@ -707,7 +707,7 @@ card:
 </details>
 
 
-### Version 8 : Conseils d'utilisation
+
 
 ### Actualisation des données
 Les capteurs se mettent à jour toutes les **60 secondes** par défaut.
