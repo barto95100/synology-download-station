@@ -43,9 +43,29 @@ Home Assistant integration to monitor and control Synology Download Station in r
    - Search for "Synology Download Station"
    - Follow the configuration instructions
 
-### Method 2: Via HACS (Coming Soon)
+### Method 2: Via HACS (Recommended)
 
-This integration will be available via HACS soon.
+#### Option A: Installation from HACS (Custom Repository)
+
+While waiting for official HACS approval, you can install the integration as a custom repository:
+
+1. Open HACS in Home Assistant
+2. Click on the **⋮** (three dots in the top right corner)
+3. Select **Custom repositories**
+4. Add the repository URL:
+   ```
+   https://github.com/barto95100/synology-download-station
+   ```
+5. Select category: **Integration**
+6. Click **Add**
+7. Search for "Synology Download Station" in HACS
+8. Click **Download**
+9. Restart Home Assistant
+10. Add the integration via **Settings** → **Devices & Services** → **+ Add Integration**
+
+#### Option B: From HACS Default Store
+
+The integration is currently being submitted to the HACS default store. Once approved, it will be directly available in HACS without additional configuration.
 
 ## Configuration
 
