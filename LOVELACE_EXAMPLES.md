@@ -12,7 +12,7 @@ Ce document présente différents exemples de cartes pour afficher les données 
 Affiche chaque téléchargement avec toutes ses informations (comme dans l'interface Synology).
 
 
-### Version 4 : Details telechargement avec collapse
+### Version 1 : Details telechargement avec collapse
   
 ![Alt text](/images%20card/image4.png "a title")
 
@@ -82,54 +82,7 @@ content: >
 
 </details>
 
-### Version 5 : Style moderne avec icônes et couleurs
-
-<details >
-
-<summary> ℹ️ Code disponible</summary>
-
-```yaml
-type: markdown
-title: 📥 Download Station
-content: |
-  {% set downloads = state_attr('sensor.synology_download_station_active_downloads', 'downloads') %}
-  {% if downloads and downloads|length > 0 %}
-    {% for download in downloads %}
-  <div style="background: linear-gradient(135deg, rgba(30,60,114,0.8) 0%, rgba(42,82,152,0.8) 100%); padding: 15px; margin: 15px 0; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-      <h3 style="margin: 0; color: #fff; flex: 1;">{{ download.title }}</h3>
-      <span style="background: rgba(76,175,80,0.8); padding: 5px 15px; border-radius: 20px; font-weight: bold; color: #fff;">
-        {{ download.progress | round(1) }}%
-      </span>
-    </div>
-    
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
-      <div>
-        <div style="color: #aaa; font-size: 12px;">VITESSE</div>
-        <div style="color: #fff; font-size: 18px; font-weight: bold;">{{ (download.speed / (1024**2)) | round(2) }} <span style="font-size: 12px;">MB/s</span></div>
-      </div>
-      <div>
-        <div style="color: #aaa; font-size: 12px;">TÉLÉCHARGÉ</div>
-        <div style="color: #fff; font-size: 18px; font-weight: bold;">{{ (download.downloaded / (1024**3)) | round(2) }} <span style="font-size: 12px;">/ {{ (download.size / (1024**3)) | round(2) }} GB</span></div>
-      </div>
-    </div>
-    
-    <div style="background: rgba(0,0,0,0.3); height: 8px; border-radius: 10px; overflow: hidden;">
-      <div style="background: linear-gradient(90deg, #4CAF50, #8BC34A); height: 100%; width: {{ download.progress }}%; transition: width 0.5s ease;"></div>
-    </div>
-  </div>
-    {% endfor %}
-  {% else %}
-  <div style="text-align: center; padding: 40px; background: rgba(100,100,100,0.2); border-radius: 12px; color: #999;">
-    <div style="font-size: 48px; margin-bottom: 10px;">✓</div>
-    <div style="font-size: 18px;">Aucun téléchargement en cours</div>
-  </div>
-  {% endif %}
-```
-
-</details>
-
-### Version 6a : Carte Button-Card interactive (pleine largeur)
+### Version 2 : Carte Button-Card interactive 
 
 **⚠️ Nécessite [button-card](https://github.com/custom-cards/button-card) via HACS**
 
@@ -296,7 +249,7 @@ card_size: auto
 </details>
 
 
-### Version 6b : Carte Button-Card interactive (pleine largeur)
+### Version 3 : Carte Button-Card interactive 
 
 ![Alt text](/images%20card/image3.png "a title")
 
@@ -402,7 +355,7 @@ layout: vertical
 
 </details>
 
-### Version 6c : Carte Button-Card interactive (pleine largeur)
+### Version 4 : Carte Button-Card interactive 
 
 ![Alt text](/images%20card/image6.png "a title")
 
@@ -525,7 +478,7 @@ custom_fields:
 
 </details>
 
-### Version 6d : Carte Button-Card interactive (pleine largeur)
+### Version 5 : Carte Button-Card interactive 
 
 ![Alt text](/images%20card/image8.png "a title")
 
@@ -660,7 +613,7 @@ custom_fields:
 </details>
 
 
-### Version 12 : markdown  / Verticales card 
+### Version 6 : markdown  / Verticales card 
 
 **⚠️ Nécessite [bar-card](https://github.com/custom-cards/bar-card) via HACS**
 
@@ -722,7 +675,7 @@ cards:
 </details>
 
 
-## 🎯 Carte conditionnelle
+### Version 7 : Carte conditionnelle
 
 Affiche une alerte uniquement si des téléchargements sont actifs.
 
@@ -754,7 +707,7 @@ card:
 </details>
 
 
-## 💡 Conseils d'utilisation
+### Version 8 : Conseils d'utilisation
 
 ### Actualisation des données
 Les capteurs se mettent à jour toutes les **60 secondes** par défaut.
