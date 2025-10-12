@@ -172,3 +172,6 @@ MIT License
 ## Crédits
 
 Développé pour Home Assistant avec ❤️ par HACF
+(Home Assistant Communauté Francophone)
+* site: https://hacf.fr
+* forum: https://forum.hacf.fr
