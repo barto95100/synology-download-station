@@ -17,6 +17,8 @@ Displays each download with all its information (like in the Synology interface)
 ![Alt text](/images%20card/image4.png "a title")
 
 ![Alt text](/images%20card/image5.png "a title")
+
+![Alt text](/images%20card/image10.png "a title")
 <details >
 
 <summary> ℹ️ Code available</summary>
