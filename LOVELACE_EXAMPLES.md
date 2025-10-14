@@ -632,6 +632,11 @@ cards:
     content: |
       <div style="text-align: center; padding: 10px; font-size: 20px; font-weight: bold;">
         📥 Download Station - {{ states('sensor.synology_download_station_active_downloads') }} téléchargement(s)
+        📤 {{ states('sensor.synology_download_station_active_uploads') }} upload(s)/seeding
+      </div>
+      <div style="text-align: center; padding: 5px; font-size: 14px; color: #888;">
+        📥 {{ states('sensor.synology_download_station_total_download_speed') }} MB/s | 
+        📤 {{ states('sensor.synology_download_station_total_upload_speed') }} MB/s
       </div>
   
   # Liste avec barres
@@ -697,8 +702,10 @@ card:
     ## 🚀 Téléchargement en cours !
     
     **{{ states('sensor.synology_download_station_active_downloads') }}** fichier(s) en téléchargement
+    **{{ states('sensor.synology_download_station_active_uploads') }}** fichier(s) en upload/seeding
     
-    **Vitesse actuelle:** {{ states('sensor.synology_download_station_total_download_speed') }} MB/s
+    **📥 Vitesse Download:** {{ states('sensor.synology_download_station_total_download_speed') }} MB/s
+    **📤 Vitesse Upload:** {{ states('sensor.synology_download_station_total_upload_speed') }} MB/s
     
     **Progression:** {{ states('sensor.synology_download_station_download_progress') }}%
   title: Download Station
@@ -781,7 +788,9 @@ type: entities
 title: Download Station
 entities:
   - entity: sensor.synology_download_station_active_downloads
+  - entity: sensor.synology_download_station_active_uploads
   - entity: sensor.synology_download_station_total_download_speed
+  - entity: sensor.synology_download_station_total_upload_speed
 card_mod:
   style: |
     ha-card {
