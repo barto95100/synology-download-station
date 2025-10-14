@@ -20,6 +20,7 @@ from .const import (
     ATTR_TOTAL_DOWNLOADED,
     ATTR_TOTAL_SIZE,
     ATTR_TOTAL_SPEED,
+    ATTR_TOTAL_UPLOAD_SPEED,
     DOMAIN,
 )
 
@@ -37,11 +38,18 @@ SENSOR_TYPES = {
         "value": lambda data: data[ATTR_ACTIVE_UPLOADS],
     },
     "total_speed": {
-        "name": "Total Speed",
+        "name": "Total Download Speed",
         "unit_of_measurement": UnitOfDataRate.MEGABYTES_PER_SECOND,
         "device_class": SensorDeviceClass.DATA_RATE,
-        "icon": "mdi:speedometer",
+        "icon": "mdi:download",
         "value": lambda data: round(data[ATTR_TOTAL_SPEED] / (1024 * 1024), 2),  # B/s to MB/s
+    },
+    "total_upload_speed": {
+        "name": "Total Upload Speed",
+        "unit_of_measurement": UnitOfDataRate.MEGABYTES_PER_SECOND,
+        "device_class": SensorDeviceClass.DATA_RATE,
+        "icon": "mdi:upload",
+        "value": lambda data: round(data[ATTR_TOTAL_UPLOAD_SPEED] / (1024 * 1024), 2),  # B/s to MB/s
     },
     "total_size": {
         "name": "Total Size",

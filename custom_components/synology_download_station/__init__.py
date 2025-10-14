@@ -343,11 +343,104 @@ class SynologyDownloadStationDataUpdateCoordinator(DataUpdateCoordinator):
             )
             return None
 
+    async def _async_get_statistics(self):
+        """Get global statistics (total download/upload speeds) from Download Station."""
+        if not await self._async_login():
+            _LOGGER.error("Cannot fetch statistics: login failed for %s:%s", self.host, self.port)
+            return None
+        
+        schema = "https" if self.use_ssl else "http"
+        url = f"{schema}://{self.host}:{self.port}/webapi/DownloadStation/statistic.cgi"
+        
+        params = {
+            "api": "SYNO.DownloadStation.Statistic",
+            "version": 1,
+            "method": "getinfo",
+            "_sid": self.sid,
+        }
+
+        try:
+            _LOGGER.debug("Fetching statistics from %s:%s", self.host, self.port)
+            session = async_get_clientsession(self.hass, verify_ssl=self.verify_ssl)
+            async with async_timeout.timeout(60):
+                async with session.get(url, params=params) as response:
+                    response_status = response.status
+                    _LOGGER.debug(
+                        "Statistics response received: status=%s",
+                        response_status
+                    )
+                    
+                    response_text = await response.text()
+                    
+                    try:
+                        data = json.loads(response_text)
+                    except Exception as json_err:
+                        _LOGGER.error(
+                            "Failed to parse JSON response from Synology when fetching statistics (status %s). "
+                            "Response text (first 500 chars): %s. Parse error: %s (%s)",
+                            response_status,
+                            response_text[:500],
+                            type(json_err).__name__,
+                            json_err
+                        )
+                        return None
+                    
+                    if data.get("success"):
+                        stats = data.get("data", {})
+                        _LOGGER.debug(
+                            "Successfully fetched statistics from Synology: speed_download=%s, speed_upload=%s",
+                            stats.get("speed_download", 0),
+                            stats.get("speed_upload", 0)
+                        )
+                        return stats
+                    
+                    error_code = data.get("error", {}).get("code", "unknown")
+                    _LOGGER.error(
+                        "Failed to fetch statistics from Synology Download Station at %s:%s. "
+                        "Error code: %s, Full response: %s",
+                        self.host,
+                        self.port,
+                        error_code,
+                        data
+                    )
+                    return None
+                    
+        except asyncio.TimeoutError as err:
+            _LOGGER.error(
+                "Timeout (60s) fetching statistics from Synology Download Station at %s:%s. "
+                "Error: %s",
+                self.host,
+                self.port,
+                type(err).__name__
+            )
+            return None
+        except aiohttp.ClientError as err:
+            _LOGGER.error(
+                "Network/HTTP error fetching statistics from Synology Download Station at %s:%s. "
+                "Error type: %s, Details: %s",
+                self.host,
+                self.port,
+                type(err).__name__,
+                str(err) if str(err) else "No additional details"
+            )
+            return None
+        except Exception as err:
+            _LOGGER.exception(
+                "Unexpected error fetching statistics from Synology Download Station at %s:%s. "
+                "Error type: %s, Message: %s",
+                self.host,
+                self.port,
+                type(err).__name__,
+                str(err) if str(err) else "No error message"
+            )
+            return None
+
     async def _async_update_data(self):
         """Update data via library."""
         try:
             _LOGGER.debug("Starting data update for Synology Download Station at %s:%s", self.host, self.port)
             
+            # Fetch tasks and global statistics
             downloads = await self._async_get_downloads()
             if downloads is None:
                 error_msg = (
@@ -357,10 +450,28 @@ class SynologyDownloadStationDataUpdateCoordinator(DataUpdateCoordinator):
                 _LOGGER.error(error_msg)
                 raise UpdateFailed(error_msg)
             
-            # Calculate totals
+            # Fetch global statistics (download/upload speeds)
+            statistics = await self._async_get_statistics()
+            if statistics is None:
+                _LOGGER.warning("Failed to fetch statistics, will use fallback calculation")
+                # Fallback: calculate speeds manually
+                total_speed = 0
+                total_upload_speed = 0
+                for download in downloads:
+                    try:
+                        transfer = download.get("additional", {}).get("transfer", {})
+                        total_speed += transfer.get("speed_download", 0)
+                        total_upload_speed += transfer.get("speed_upload", 0)
+                    except Exception:
+                        continue
+            else:
+                # Use global statistics from API (more accurate)
+                total_speed = statistics.get("speed_download", 0)
+                total_upload_speed = statistics.get("speed_upload", 0)
+            
+            # Calculate other totals from tasks
             total_size = 0
             total_downloaded = 0
-            total_speed = 0
             active_downloads = 0
             active_uploads = 0
             
@@ -370,11 +481,9 @@ class SynologyDownloadStationDataUpdateCoordinator(DataUpdateCoordinator):
                     size = download.get("size", 0)
                     transfer = download.get("additional", {}).get("transfer", {})
                     size_downloaded = transfer.get("size_downloaded", 0)
-                    speed_download = transfer.get("speed_download", 0)
                     
                     total_size += size
                     total_downloaded += size_downloaded
-                    total_speed += speed_download
                     
                     if status == "downloading":
                         active_downloads += 1
@@ -389,10 +498,13 @@ class SynologyDownloadStationDataUpdateCoordinator(DataUpdateCoordinator):
                     continue
             
             _LOGGER.debug(
-                "Synology Download Station update successful: %d active downloads, %d seeding, %d total tasks",
+                "Synology Download Station update successful: %d active downloads, %d seeding, %d total tasks, "
+                "download speed: %.2f MB/s, upload speed: %.2f MB/s",
                 active_downloads,
                 active_uploads,
-                len(downloads)
+                len(downloads),
+                total_speed / (1024 ** 2),
+                total_upload_speed / (1024 ** 2)
             )
             
             return {
@@ -400,6 +512,7 @@ class SynologyDownloadStationDataUpdateCoordinator(DataUpdateCoordinator):
                 "total_size": total_size,
                 "total_downloaded": total_downloaded,
                 "total_speed": total_speed,
+                "total_upload_speed": total_upload_speed,
                 "active_downloads": active_downloads,
                 "active_uploads": active_uploads,
             }

@@ -17,17 +17,21 @@ SESSION_TIMEOUT = timedelta(minutes=8)
 # API endpoints
 API_AUTH = "auth.cgi"
 API_DOWNLOAD = "DownloadStation/task.cgi"
+API_STATISTIC = "DownloadStation/statistic.cgi"
 
 # API parameters
 API_AUTH_METHOD = "login"
 API_AUTH_VERSION = 3
 API_DOWNLOAD_METHOD = "list"
 API_DOWNLOAD_VERSION = 3
+API_STATISTIC_METHOD = "getinfo"
+API_STATISTIC_VERSION = 1
 
 # Sensor attributes
 ATTR_TASKS = "tasks"
 ATTR_TOTAL_SIZE = "total_size"
 ATTR_TOTAL_DOWNLOADED = "total_downloaded"
 ATTR_TOTAL_SPEED = "total_speed"
+ATTR_TOTAL_UPLOAD_SPEED = "total_upload_speed"
 ATTR_ACTIVE_DOWNLOADS = "active_downloads"
 ATTR_ACTIVE_UPLOADS = "active_uploads"
