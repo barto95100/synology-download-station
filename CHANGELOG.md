@@ -17,7 +17,10 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/lang/fr/).
   - Fallback automatique vers le calcul manuel si l'API Statistics n'est pas disponible
 
 ### 🔧 Modifié / Changed
-- Le capteur `total_speed` est maintenant renommé `Total Download Speed` pour plus de clarté
+- **⚠️ BREAKING CHANGE** : Le capteur `total_speed` est renommé en `total_download_speed` pour plus de cohérence
+  - Ancien : `sensor.synology_download_station_total_speed`
+  - Nouveau : `sensor.synology_download_station_total_download_speed`
+  - **Action requise** : Mettez à jour vos dashboards et automations avec le nouveau nom
 - Les logs incluent maintenant les vitesses de download et upload en MB/s pour faciliter le débogage
 
 ---

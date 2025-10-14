@@ -538,7 +538,7 @@ custom_fields:
             </div>
             <div style="text-align: right;">
               <div style="font-size: 24px; font-weight: bold; color: white;">
-                ${states['sensor.synology_download_station_total_speed'].state}
+                ${states['sensor.synology_download_station_total_download_speed'].state}
               </div>
               <div style="font-size: 12px; color: rgba(255,255,255,0.8);">MB/s</div>
             </div>
@@ -698,7 +698,7 @@ card:
     
     **{{ states('sensor.synology_download_station_active_downloads') }}** file(s) downloading
     
-    **Current speed:** {{ states('sensor.synology_download_station_total_speed') }} MB/s
+    **Current speed:** {{ states('sensor.synology_download_station_total_download_speed') }} MB/s
     
     **Progress:** {{ states('sensor.synology_download_station_download_progress') }}%
   title: Download Station
@@ -749,7 +749,7 @@ action:
 alias: Slow Download Speed Alert
 trigger:
   - platform: numeric_state
-    entity_id: sensor.synology_download_station_total_speed
+    entity_id: sensor.synology_download_station_total_download_speed
     below: 1
     for:
       minutes: 5
@@ -781,7 +781,7 @@ type: entities
 title: Download Station
 entities:
   - entity: sensor.synology_download_station_active_downloads
-  - entity: sensor.synology_download_station_total_speed
+  - entity: sensor.synology_download_station_total_download_speed
 card_mod:
   style: |
     ha-card {

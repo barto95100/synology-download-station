@@ -37,7 +37,7 @@ SENSOR_TYPES = {
         "icon": "mdi:upload",
         "value": lambda data: data[ATTR_ACTIVE_UPLOADS],
     },
-    "total_speed": {
+    "total_download_speed": {
         "name": "Total Download Speed",
         "unit_of_measurement": UnitOfDataRate.MEGABYTES_PER_SECOND,
         "device_class": SensorDeviceClass.DATA_RATE,
