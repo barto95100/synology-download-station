@@ -7,7 +7,7 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/lang/fr/).
 
 ---
 
-## [Unreleased]
+## [1.1.0] - 2025-01-15
 
 ### ✨ Ajouté / Added
 - **Nouveau capteur `total_upload_speed`** : Affiche la vitesse d'upload totale de Download Station en MB/s
@@ -22,6 +22,10 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/lang/fr/).
   - Nouveau : `sensor.synology_download_station_total_download_speed`
   - **Action requise** : Mettez à jour vos dashboards et automations avec le nouveau nom
 - Les logs incluent maintenant les vitesses de download et upload en MB/s pour faciliter le débogage
+
+### 📚 Documentation
+- Mise à jour des exemples Lovelace (FR et EN) avec les nouveaux noms de capteurs
+- Ajout d'exemples pour le nouveau capteur d'upload
 
 ---
 
@@ -72,5 +76,6 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/lang/fr/).
 
 ---
 
+[1.1.0]: https://github.com/barto95100/synology-download-station/releases/tag/v1.1.0
 [1.0.0]: https://github.com/barto95100/synology-download-station/releases/tag/v1.0.0
 
