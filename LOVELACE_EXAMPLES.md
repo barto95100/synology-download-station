@@ -775,5 +775,34 @@ action:
 
 </details>
 
+
+
+Vous pouvez personnaliser l'apparence de n'importe quelle carte avec [card-mod](https://github.com/thomasloven/lovelace-card-mod).
+
+**Exemple:**
+
+<details >
+
+<summary> ℹ️ Code disponible</summary>
+
+```yaml
+type: entities
+title: Download Station
+entities:
+  - entity: sensor.synology_download_station_active_downloads
+  - entity: sensor.synology_download_station_active_uploads
+  - entity: sensor.synology_download_station_total_download_speed
+  - entity: sensor.synology_download_station_total_upload_speed
+card_mod:
+  style: |
+    ha-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 15px;
+    }
+```
+
+</details>
+
 \
 **💡 Astuce:** Combinez plusieurs cartes pour créer votre tableau de bord personnalisé !
