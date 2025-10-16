@@ -7,7 +7,7 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/lang/fr/).
 
 ---
 
-## [1.1.0] - 2025-01-15
+## [1.2.0] - 2025-01-16
 
 ### ✨ Ajouté / Added
 - **Nouveau capteur `total_upload_speed`** : Affiche la vitesse d'upload totale de Download Station en MB/s
@@ -84,6 +84,6 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/lang/fr/).
 
 ---
 
-[1.1.0]: https://github.com/barto95100/synology-download-station/releases/tag/v1.1.0
+[1.2.0]: https://github.com/barto95100/synology-download-station/releases/tag/v1.2.0
 [1.0.0]: https://github.com/barto95100/synology-download-station/releases/tag/v1.0.0
 
