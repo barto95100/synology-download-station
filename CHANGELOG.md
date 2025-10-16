@@ -15,6 +15,12 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/lang/fr/).
   - Plus précis que la somme des vitesses individuelles
   - Plus performant (une seule requête API au lieu de calculer sur chaque tâche)
   - Fallback automatique vers le calcul manuel si l'API Statistics n'est pas disponible
+- **Service `task_control`** : Contrôle des tâches de téléchargement
+  - Actions disponibles : `pause`, `resume`, `delete`
+  - Support des IDs simples (2623) et complets (dbid_2623)
+  - Gestion flexible des formats d'entrée (nombre, string, liste)
+  - Possibilité de contrôler toutes les tâches avec `all: true`
+- **IDs des tâches dans les attributs** : Les détails des tâches incluent maintenant l'ID pour le contrôle via le service
 
 ### 🔧 Modifié / Changed
 - **⚠️ BREAKING CHANGE** : Le capteur `total_speed` est renommé en `total_download_speed` pour plus de cohérence
@@ -26,6 +32,8 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/lang/fr/).
 ### 📚 Documentation
 - Mise à jour des exemples Lovelace (FR et EN) avec les nouveaux noms de capteurs
 - Ajout d'exemples pour le nouveau capteur d'upload
+- Documentation complète du service `task_control` dans les README (FR et EN)
+- Exemples d'utilisation du service avec tous les formats d'IDs supportés
 
 ---
 

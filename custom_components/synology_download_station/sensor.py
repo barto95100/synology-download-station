@@ -123,24 +123,25 @@ class SynologyDownloadStationSensor(CoordinatorEntity, SensorEntity):
             return {}
             
         attrs = {}
-        if self._sensor_type == "active_downloads" and ATTR_TASKS in self.coordinator.data:
-            tasks = [
-                {
-                    "title": task["title"],
-                    "status": task["status"],
-                    "size": task["size"],
-                    "downloaded": task["additional"]["transfer"]["size_downloaded"],
-                    "speed": task["additional"]["transfer"]["speed_download"],
-                    "progress": (
-                        task["additional"]["transfer"]["size_downloaded"] / task["size"] * 100
-                        if task["size"] > 0
-                        else 0
-                    ),
-                }
-                for task in self.coordinator.data[ATTR_TASKS]
-                if task["status"] == "downloading"
-            ]
-            attrs["downloads"] = tasks
+        # Utiliser la nouvelle liste "downloads" qui contient les IDs
+        if "downloads" in self.coordinator.data:
+            downloads_list = self.coordinator.data["downloads"]
+            
+            if self._sensor_type == "active_downloads":
+                # Filtrer seulement les téléchargements actifs
+                attrs["downloads"] = [
+                    task for task in downloads_list 
+                    if task.get("status") == "downloading"
+                ]
+            elif self._sensor_type == "active_uploads":
+                # Filtrer seulement les seedings actifs
+                attrs["downloads"] = [
+                    task for task in downloads_list 
+                    if task.get("status") == "seeding"
+                ]
+            else:
+                # Pour les autres capteurs, afficher toutes les tâches
+                attrs["downloads"] = downloads_list
             
         return attrs
 

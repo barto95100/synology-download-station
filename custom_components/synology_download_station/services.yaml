@@ -1,0 +1,31 @@
+task_control:
+  name: Task control
+  description: Pause, resume or delete Download Station tasks.
+  fields:
+    action:
+      name: Action
+      description: Action to perform on tasks
+      required: true
+      example: pause
+      selector:
+        select:
+          options:
+            - pause
+            - resume
+            - delete
+    ids:
+      name: Task IDs
+      description: Task ID(s) to target. Can be a number (2623), string ("2623"), list ([2623, 2624]), or full format ("dbid_2623"). Ignored if all=true.
+      required: false
+      example: 2623
+      selector:
+        object: {}
+    all:
+      name: All tasks
+      description: Apply action to all tasks
+      required: false
+      default: false
+      selector:
+        boolean: {}
+
+

@@ -25,6 +25,7 @@ Home Assistant integration to monitor and control Synology Download Station in r
 - 🔐 **Secure authentication** with session management
 - 🌐 **SSL/HTTPS support**
 - 📝 **Download details** in sensor attributes
+- 🎮 **Control service** to pause, resume, or delete tasks
 
 ## Installation
 
@@ -101,6 +102,77 @@ Once configured, the integration will create the following sensors:
 | `sensor.synology_download_station_total_size` | Total download size | GB |
 | `sensor.synology_download_station_total_downloaded` | Downloaded data | GB |
 | `sensor.synology_download_station_download_progress` | Overall progress | % |
+
+## Available Services
+
+The integration provides a service to control download tasks:
+
+### `synology_download_station.task_control`
+
+This service allows you to pause, resume, or delete download tasks.
+
+#### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `action` | string | Yes | Action to perform: `pause`, `resume`, or `delete` |
+| `ids` | number/string/list | No* | ID(s) of the task(s) to control |
+| `all` | boolean | No | If `true`, applies the action to all tasks |
+
+*`ids` is required unless `all=true`
+
+#### Accepted ID Formats
+
+The service accepts multiple formats for IDs:
+
+- **Simple number**: `2623`
+- **Simple string**: `"2623"`
+- **List of numbers**: `[2623, 2624, 2625]`
+- **List of strings**: `["2623", "2624", "2625"]`
+- **Full format**: `"dbid_2623"`
+
+#### Usage Examples
+
+**Pause a specific task:**
+```yaml
+service: synology_download_station.task_control
+data:
+  action: pause
+  ids: 2623
+```
+
+**Resume multiple tasks:**
+```yaml
+service: synology_download_station.task_control
+data:
+  action: resume
+  ids: [2623, 2624, 2625]
+```
+
+**Delete all tasks:**
+```yaml
+service: synology_download_station.task_control
+data:
+  action: delete
+  all: true
+```
+
+**Pause all tasks:**
+```yaml
+service: synology_download_station.task_control
+data:
+  action: pause
+  all: true
+```
+
+#### Finding Task IDs
+
+Task IDs are available in sensor attributes:
+
+1. Go to **Settings** → **Entities**
+2. Search for `sensor.synology_download_station_active_downloads`
+3. Click on the sensor
+4. In the `downloads` attribute, you'll see the list of tasks with their IDs
 
 ## Usage Examples
 

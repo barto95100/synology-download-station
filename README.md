@@ -25,6 +25,7 @@ Intégration Home Assistant pour surveiller et contrôler Synology Download Stat
 - 🔐 **Authentification sécurisée** avec gestion des sessions
 - 🌐 **Support SSL/HTTPS**
 - 📝 **Détails des téléchargements** dans les attributs des capteurs
+- 🎮 **Service de contrôle** pour mettre en pause, reprendre ou supprimer les tâches
 
 ## Installation
 
@@ -101,6 +102,77 @@ Une fois configurée, l'intégration créera les capteurs suivants :
 | `sensor.synology_download_station_total_size` | Taille totale des téléchargements | GB |
 | `sensor.synology_download_station_total_downloaded` | Données téléchargées | GB |
 | `sensor.synology_download_station_download_progress` | Progression globale | % |
+
+## Services disponibles
+
+L'intégration fournit un service pour contrôler les tâches de téléchargement :
+
+### `synology_download_station.task_control`
+
+Ce service permet de mettre en pause, reprendre ou supprimer des tâches de téléchargement.
+
+#### Paramètres
+
+| Paramètre | Type | Requis | Description |
+|-----------|------|--------|-------------|
+| `action` | string | Oui | Action à effectuer : `pause`, `resume`, ou `delete` |
+| `ids` | number/string/list | Non* | ID(s) de la/des tâche(s) à contrôler |
+| `all` | boolean | Non | Si `true`, applique l'action à toutes les tâches |
+
+*`ids` est requis sauf si `all=true`
+
+#### Formats d'ID acceptés
+
+Le service accepte plusieurs formats pour les IDs :
+
+- **Nombre simple** : `2623`
+- **String simple** : `"2623"`
+- **Liste de nombres** : `[2623, 2624, 2625]`
+- **Liste de strings** : `["2623", "2624", "2625"]`
+- **Format complet** : `"dbid_2623"`
+
+#### Exemples d'utilisation
+
+**Mettre en pause une tâche spécifique :**
+```yaml
+service: synology_download_station.task_control
+data:
+  action: pause
+  ids: 2623
+```
+
+**Reprendre plusieurs tâches :**
+```yaml
+service: synology_download_station.task_control
+data:
+  action: resume
+  ids: [2623, 2624, 2625]
+```
+
+**Supprimer toutes les tâches :**
+```yaml
+service: synology_download_station.task_control
+data:
+  action: delete
+  all: true
+```
+
+**Mettre en pause toutes les tâches :**
+```yaml
+service: synology_download_station.task_control
+data:
+  action: pause
+  all: true
+```
+
+#### Trouver les IDs des tâches
+
+Les IDs des tâches sont disponibles dans les attributs des capteurs :
+
+1. Allez dans **Paramètres** → **Entités**
+2. Recherchez `sensor.synology_download_station_active_downloads`
+3. Cliquez sur le capteur
+4. Dans l'attribut `downloads`, vous verrez la liste des tâches avec leurs IDs
 
 ## Exemples d'utilisation
 
