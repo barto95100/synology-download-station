@@ -10,6 +10,22 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/lang/fr/).
 ## [1.2.0] - 2025-01-16
 
 ### ✨ Ajouté / Added
+- **Service `task_control`** : Contrôle des tâches de téléchargement
+  - Actions disponibles : `pause`, `resume`, `delete`
+  - Support des IDs simples (2623) et complets (dbid_2623)
+  - Gestion flexible des formats d'entrée (nombre, string, liste)
+  - Possibilité de contrôler toutes les tâches avec `all: true`
+- **IDs des tâches dans les attributs** : Les détails des tâches incluent maintenant l'ID pour le contrôle via le service
+
+### 📚 Documentation
+- Documentation complète du service `task_control` dans les README (FR et EN)
+- Exemples d'utilisation du service avec tous les formats d'IDs supportés
+
+---
+
+## [1.1.0] - 2025-01-14
+
+### ✨ Ajouté / Added
 - **Nouveau capteur `total_upload_speed`** : Affiche la vitesse d'upload totale de Download Station en MB/s
 - **API Statistiques** : Utilisation de `SYNO.DownloadStation.Statistic` pour obtenir les vitesses globales de download/upload
   - Plus précis que la somme des vitesses individuelles
