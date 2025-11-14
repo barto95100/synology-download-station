@@ -46,27 +46,15 @@ Intégration Home Assistant pour surveiller et contrôler Synology Download Stat
 
 ### Méthode 2 : Via HACS (recommandé)
 
-#### Option A : Installation depuis HACS (dépôt personnalisé)
-
-En attendant l'approbation officielle dans HACS, vous pouvez installer l'intégration comme dépôt personnalisé :
-
-1. Ouvrez HACS dans Home Assistant
-2. Cliquez sur les **⋮** (trois points en haut à droite)
-3. Sélectionnez **Dépôts personnalisés**
-4. Ajoutez l'URL du dépôt :
-   ```
-   https://github.com/barto95100/synology-download-station
-   ```
-5. Sélectionnez la catégorie : **Integration**
-6. Cliquez sur **Ajouter**
-7. Recherchez "Synology Download Station" dans HACS
-8. Cliquez sur **Télécharger**
-9. Redémarrez Home Assistant
-10. Ajoutez l'intégration via **Paramètres** → **Appareils et services** → **+ Ajouter une intégration**
-
-#### Option B : Depuis le store HACS par défaut
-
-L'intégration est en cours de soumission au store HACS par défaut. Une fois approuvée, elle sera directement disponible dans HACS sans configuration supplémentaire.
+1. Rechercher Synology Download Station dans la barre de recherche
+2. Sélectionner "Download" en bas de la page
+3. Choisissé une version et/ou valider sur download
+4. Redémarrez Home Assistant
+5. Ajoutez l'intégration via l'interface utilisateur :
+   - Allez dans **Paramètres** → **Appareils et services**
+   - Cliquez sur **+ Ajouter une intégration**
+   - Recherchez "Synology Download Station"
+   - Suivez les instructions de configuration
 
 ## Configuration
 
