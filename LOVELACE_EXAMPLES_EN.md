@@ -715,6 +715,187 @@ card:
 
 </details>
 
+### version 8 : Carte détail
+
+Displays multiple cards with status, action, summary
+
+Reduced menu:
+
+![Alt text](/images%20card/image10.png "a title")
+
+Expanded menu:
+
+![Alt text](/images%20card/image11.png "a title")
+
+<details >
+  
+<summary> ℹ️ Code available</summary>
+
+```yaml
+type: custom:mod-card
+style: |
+ha-card {
+border-radius: 15px;
+background: rgba(30,30,50,0.85);
+box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+padding: 15px;
+color: white;
+}
+card:
+type: vertical-stack
+cards:
+- type: markdown
+content: >
+## 🖥️ Synology Download Station
+
+    {% set d =
+    states('sensor.synology_download_station_active_downloads')|int %}
+
+    {% set u = states('sensor.synology_download_station_active_uploads')|int
+    %}
+
+
+    {% if d > 0 and u > 0 %}
+
+    📥 **Downloads aktiv:** {{ d }} &nbsp;&nbsp; 📤 **Uploads:** {{ u }}
+
+    {% elif d > 0 %}
+
+    📥 **Downloads aktiv:** {{ d }}
+
+    {% elif u > 0 %}
+
+    📤 **Uploads:** {{ u }}
+
+    {% endif %}
+
+
+    🕒 **Gesamtfortschritt:** {{
+    states('sensor.synology_download_station_download_progress') }} %  
+
+    🌐 **Download Speed:** {{
+    states('sensor.synology_download_station_total_download_speed') }}
+    MB/s  
+
+    ⬆️ **Upload Speed:** {{
+    states('sensor.synology_download_station_total_upload_speed') }} MB/s
+- type: markdown
+  content: >
+    {% set downloads =
+    state_attr('sensor.synology_download_station_active_downloads',
+    'downloads') or [] %}
+
+    {% if downloads %}
+
+    ### 📥 Aktive Downloads
+
+    {% for d in downloads %}
+
+    <details style="margin-bottom:10px; border-left: 4px solid #00BFFF;
+    padding-left:5px;">
+
+    <summary>📄 {{ d.title | default('Unbekannte Datei') }}</summary>
+
+    🆔 ID: `{{ d.id }}` | 🔄 Status: {{ d.status }}<br>
+
+    📊 Fortschritt: {{ d.progress | default('100') }} % | 💾 Gesamt: {{
+    (d.size / 1024 / 1024 / 1024)|round(2) if d.size else '?' }} GB | ⬇️
+    Geladen: {{ (d.downloaded / 1024 / 1024 / 1024)|round(2) if d.downloaded
+    else '?' }} GB<br>
+
+    🚀 Speed: {{ d.speed | default('0') }} MB/s
+
+    </details>
+
+    {% endfor %}
+
+    {% else %}
+
+    _Keine aktiven Downloads_
+
+    {% endif %}
+- type: markdown
+  content: >
+    {% set uploads =
+    state_attr('sensor.synology_download_station_active_uploads',
+    'downloads') or [] %}
+
+    {% if uploads %}
+
+    ### 📤 Aktive Uploads / Seeding
+
+    {% for u in uploads %}
+
+    <details style="margin-bottom:10px; border-left: 4px solid #32CD32;
+    padding-left:5px;">
+
+    <summary>📄 {{ u.title | default('Unbekannte Datei') }}</summary>
+
+    🆔 ID: `{{ u.id }}` | 🔄 Status: {{ u.status }}<br>
+
+    📊 Fortschritt: {{ u.progress | default('100') }} % | 💾 Gesamt: {{
+    (u.size / 1024 / 1024 / 1024)|round(2) if u.size else '?' }} GB | ⬆️
+    Hochgeladen: {{ (u.downloaded / 1024 / 1024 / 1024)|round(2) if
+    u.downloaded else '?' }} GB
+
+    </details>
+
+    {% endfor %}
+
+    {% else %}
+
+    _Keine aktiven Uploads_
+
+    {% endif %}
+- type: horizontal-stack
+  cards:
+    - type: sensor
+      entity: sensor.synology_download_station_total_download_speed
+      graph: line
+      name: ⬇️ Download Speed
+      unit: MB/s
+    - type: sensor
+      entity: sensor.synology_download_station_total_upload_speed
+      graph: line
+      name: ⬆️ Upload Speed
+      unit: MB/s
+- type: horizontal-stack
+  cards:
+    - type: button
+      name: ⏸ Pause alle
+      icon: mdi:pause
+      tap_action:
+        action: call-service
+        service: synology_download_station.task_control
+        data:
+          action: pause
+          all: true
+    - type: button
+      name: ▶️ Resume alle
+      icon: mdi:play
+      tap_action:
+        action: call-service
+        service: synology_download_station.task_control
+        data:
+          action: resume
+          all: true
+    - type: button
+      name: 🗑 Löschen alle
+      icon: mdi:delete
+      tap_action:
+        action: call-service
+        service: synology_download_station.task_control
+        data:
+          action: delete
+          all: true
+- type: entities
+  title: ⚙️ Update Status
+  entities:
+    - entity: update.synology_download_station_update
+      name: Version / Update
+```
+
+</details>
 
 
 
